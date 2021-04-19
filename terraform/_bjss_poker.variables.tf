@@ -15,9 +15,3 @@ variable "domain_name" {
   description = "Domain name to use for the application"
   default     = "bjss.poker"
 }
-
-variable "publish_lambdas" {
-  type        = bool
-  description = "Set to true to publish new Lambda functions from S3 bucket"
-  default     = false
-}

@@ -6,8 +6,8 @@ resource "aws_lambda_function" "bjss_poker_connect" {
 
   role = aws_iam_role.lambda_connect.arn
 
-  publish = var.publish_lambdas
+  publish = true
 
-  s3_bucket = aws_s3_bucket.devops_bjss_poker.bucket
-  s3_key = "lambdas/connect.zip"
+  filename         = "../lambda/_build/connect.zip"
+  source_code_hash = data.archive_file.connect_lambda.output_base64sha256
 }

@@ -18,6 +18,11 @@ terraform {
       source  = "hashicorp/aws"
       version = ">= 3.37.0, < 4.0.0"
     }
+
+    archive = {
+      source  = "hashicorp/archive"
+      version = ">= 2.1.0, < 3.0.0"
+    }
   }
 
   backend "s3" {
