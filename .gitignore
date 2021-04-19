@@ -1,7 +1,9 @@
+# General
+/build
+
 # Frontend
 
 # Lambda
-/lambda/_build
 
 # Terraform
 /terraform/.terraform/

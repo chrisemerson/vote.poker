@@ -8,6 +8,6 @@ resource "aws_lambda_function" "bjss_poker_connect" {
 
   publish = true
 
-  filename         = "../lambda/_build/connect.zip"
-  source_code_hash = data.archive_file.connect_lambda.output_base64sha256
+  filename         = data.archive_file.lambdas["connect"].output_path
+  source_code_hash = data.archive_file.lambdas["connect"].output_base64sha256
 }
