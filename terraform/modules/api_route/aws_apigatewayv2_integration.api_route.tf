@@ -1,6 +1,6 @@
 resource "aws_apigatewayv2_integration" "api_route" {
   api_id           = var.api_gateway.id
-  integration_type = "AWS"
+  integration_type = "AWS_PROXY"
 
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
