@@ -27,3 +27,15 @@ variable "dns_ttl" {
   description = "TTL to use for DNS entries"
   default     = 10 * 60 // 10 minutes
 }
+
+variable "rooms_table_name" {
+  type        = string
+  description = "Name of the dynamo DB table for storing room information"
+  default     = "bjss.poker_rooms"
+}
+
+variable "voters_table_name" {
+  type        = string
+  description = "Name of the dynamo DB table for storing room information"
+  default     = "bjss.poker_voters"
+}
