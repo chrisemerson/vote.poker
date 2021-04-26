@@ -1,5 +1,5 @@
 resource "aws_apigatewayv2_api" "bjss_poker" {
-  name          = "bjss.poker"
+  name          = var.domain_name
   protocol_type = "WEBSOCKET"
 
   route_selection_expression   = "$request.body.action"

@@ -15,3 +15,15 @@ variable "domain_name" {
   description = "Domain name to use for the application"
   default     = "bjss.poker"
 }
+
+variable "api_sub_domain" {
+  type        = string
+  description = "Subdomain to use for the API"
+  default     = "api"
+}
+
+variable "dns_ttl" {
+  type        = number
+  description = "TTL to use for DNS entries"
+  default     = 10 * 60 // 10 minutes
+}

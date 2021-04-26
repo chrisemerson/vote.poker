@@ -1,5 +1,5 @@
 resource "aws_route53_record" "api_bjss_poker" {
-  name    = "api"
+  name    = var.api_sub_domain
   type    = "A"
   zone_id = aws_route53_zone.bjss_poker.id
 
