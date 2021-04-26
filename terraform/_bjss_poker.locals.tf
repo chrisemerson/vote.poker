@@ -4,5 +4,6 @@ locals {
   lambda_route_mapping = {
     "$connect"    = "connect"
     "$disconnect" = "disconnect"
+    "$default"    = "default"
   }
 }
