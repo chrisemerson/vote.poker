@@ -2,6 +2,8 @@
 /build
 
 # Frontend
+/frontend/node_modules/
+/frontend/public/build/
 
 # Lambda
 /lambda/*/node_modules/
