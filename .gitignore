@@ -4,6 +4,7 @@
 # Frontend
 
 # Lambda
+/lambda/*/node_modules/
 
 # Terraform
 /terraform/.terraform/

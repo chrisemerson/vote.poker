@@ -5,10 +5,10 @@ resource "aws_dynamodb_table" "bjss_poker_voters" {
   read_capacity  = 10
   write_capacity = 10
 
-  hash_key = "voter_id"
+  hash_key = "connection_id"
 
   attribute {
-    name = "voter_id"
+    name = "connection_id"
     type = "S"
   }
 }
