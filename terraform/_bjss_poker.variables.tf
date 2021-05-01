@@ -30,6 +30,12 @@ variable "dns_ttl" {
 
 variable "voters_table_name" {
   type        = string
-  description = "Name of the dynamo DB table for storing room information"
+  description = "Name of the dynamo DB table for storing voter information"
   default     = "bjss.poker_voters"
+}
+
+variable "rooms_table_name" {
+  type        = string
+  description = "Name of the dynamo DB table for storing room information"
+  default     = "bjss.poker_rooms"
 }

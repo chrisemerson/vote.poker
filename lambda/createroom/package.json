@@ -1,0 +1,8 @@
+{
+  "name": "bjss-poker-lambda-createroom",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "aws-sdk": "^2.897.0"
+  }
+}
