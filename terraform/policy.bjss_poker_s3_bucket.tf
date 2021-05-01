@@ -1,6 +1,5 @@
 data "aws_iam_policy_document" "bjss_poker_s3_bucket" {
   statement {
-    sid    = "1"
     effect = "Allow"
 
     principals {

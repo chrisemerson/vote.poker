@@ -1,3 +1,8 @@
+variable "aws_region" {
+  type        = string
+  description = "The AWS region to use"
+}
+
 variable "route_key" {
   type        = string
   description = "Name of the route to add"
