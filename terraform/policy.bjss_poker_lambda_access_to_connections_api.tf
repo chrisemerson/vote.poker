@@ -3,6 +3,7 @@ data "aws_iam_policy_document" "bjss_poker_lambda_access_to_connections_api" {
     effect = "Allow"
 
     actions = [
+      "execute-api:Invoke",
       "execute-api:ManageConnections"
     ]
 
