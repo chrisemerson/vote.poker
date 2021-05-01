@@ -8,7 +8,9 @@ data "aws_iam_policy_document" "bjss_poker_lambda_access_to_connections_api" {
     ]
 
     resources = [
-      "${aws_apigatewayv2_api.bjss_poker.execution_arn}/${aws_apigatewayv2_stage.bjss_poker_prod.name}/POST/@connections"
+      "${aws_apigatewayv2_api.bjss_poker.execution_arn}/${aws_apigatewayv2_stage.bjss_poker_prod.name}/GET/@connections/*",
+      "${aws_apigatewayv2_api.bjss_poker.execution_arn}/${aws_apigatewayv2_stage.bjss_poker_prod.name}/POST/@connections/*",
+      "${aws_apigatewayv2_api.bjss_poker.execution_arn}/${aws_apigatewayv2_stage.bjss_poker_prod.name}/DELETE/@connections/*"
     ]
   }
 }

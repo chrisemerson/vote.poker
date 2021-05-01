@@ -1,20 +1,9 @@
-import {io} from "socket.io-client";
+export const socket = new WebSocket('wss://api.bjss.poker')
 
-// export const socket = io("", {
-//     'transports': ['websocket'],
-//     'path': '/',
-//     auth: {
-//         token: 'test'
-//     },
-//     reconnectionDelay: 30000,
-//     reconnectionDelayMax: 30000,
-//     transportOptions: {
-//         websocket: {
-//             extraHeaders: {
-//                 'x-api-key': 'test'
-//             }
-//         }
-//     }
-// });
-//
-// socket.connect();
+socket.onopen = function () {
+    console.log("Connected to the socket!");
+};
+
+socket.onclose = function () {
+    console.log("Disconnected from socket :(")
+};

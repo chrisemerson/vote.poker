@@ -1,22 +1,47 @@
 const aws = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
+
 aws.config.update({region: 'eu-west-1'});
+
 const ddb = new aws.DynamoDB({apiVersion: '2012-08-10'});
+const api = new aws.ApiGatewayManagementApi({
+    endpoint: process.env.API_GATEWAY_MANAGEMENT_ENDPOINT
+});
 
 exports.handler = async (event) => {
-    let params = {
+    const roomID = uuidv4();
+
+    let ddbParams = {
         TableName: 'bjss.poker_rooms',
         Item: {
-            connection_id: {S: event.requestContext.connectionId}
+            room_id: {S: roomID}
         }
     };
 
-    try {
-        await ddb.putItem(params).promise();
+    let apiParams = {
+        ConnectionId: event.requestContext.connectionId,
+        Data: Buffer.from(JSON.stringify(
+            {
+                "action": "roomcreated",
+                "data": {
+                    "room_id": roomID
+                }
+            }
+        ))
+    };
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify("Created Dynamo DB entry for connection ID " + event.requestContext.connectionId),
-        };
+    try {
+        let ddbResponse = ddb.putItem(ddbParams).promise();
+        let apiResponse = api.postToConnection(apiParams).promise();
+
+        return Promise.all([ddbResponse, apiResponse])
+            .then(() => {
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify("Created Dynamo DB entry for new room with ID " + roomID),
+                };
+            })
+            .catch((err) => throw err);
     } catch (err) {
         return {
             statusCode: 500,

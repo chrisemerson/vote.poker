@@ -13,7 +13,7 @@ resource "aws_lambda_function" "api_route" {
 
   environment {
     variables = {
-      API_GATEWAY_POSTBACK_URL = "https://${var.api_gateway.id}.execute-api.${var.aws_region}.amazonaws.com/prod/@connections/"
+      API_GATEWAY_MANAGEMENT_ENDPOINT = "${var.api_gateway.id}.execute-api.${var.aws_region}.amazonaws.com/prod"
     }
   }
 }
