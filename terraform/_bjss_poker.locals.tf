@@ -5,12 +5,12 @@ locals {
     "$connect"           = "connect"
     "$disconnect"        = "disconnect"
     "$default"           = "default"
-    "changename"         = "changename"
     "changeroomsettings" = "changeroomsettings"
+    "changevoterdata"    = "changevoterdata"
     "createroom"         = "createroom"
     "joinroom"           = "joinroom"
     "placevote"          = "placevote"
-    "resetvote"          = "resetvote"
-    "revealvote"         = "revealvote"
+    "resetvotes"         = "resetvotes"
+    "revealvotes"        = "revealvotes"
   }
 }

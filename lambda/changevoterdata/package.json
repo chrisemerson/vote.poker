@@ -1,5 +1,5 @@
 {
-  "name": "bjss-poker-lambda-placevote",
+  "name": "bjss-poker-lambda-changevoterdata",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

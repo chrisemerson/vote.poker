@@ -1,8 +1,8 @@
 {
-  "name": "bjss-poker-lambda-connect",
+  "name": "bjss-poker-lambda-revealvotes",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "aws-sdk": "^2.897.0"
+    "aws-sdk": "^2.899.0"
   }
 }

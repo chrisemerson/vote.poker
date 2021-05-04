@@ -10,11 +10,13 @@ const api = new aws.ApiGatewayManagementApi({
 
 exports.handler = async (event) => {
     const roomID = uuidv4();
+    const roomSettings = {};
 
     let ddbParams = {
         TableName: 'bjss.poker_rooms',
         Item: {
-            room_id: {S: roomID}
+            room_id: {S: roomID},
+            room_settings: {S: JSON.stringify(roomSettings)}
         }
     };
 
@@ -24,7 +26,8 @@ exports.handler = async (event) => {
             {
                 "action": "roomcreated",
                 "data": {
-                    "room_id": roomID
+                    "room_id": roomID,
+                    "room_settings": roomSettings
                 }
             }
         ))
@@ -41,7 +44,7 @@ exports.handler = async (event) => {
                     body: JSON.stringify("Created Dynamo DB entry for new room with ID " + roomID),
                 };
             })
-            .catch((err) => throw err);
+            .catch((err) => { throw err});
     } catch (err) {
         return {
             statusCode: 500,

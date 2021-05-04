@@ -6,12 +6,15 @@ exports.handler = async (event) => {
     let params = {
         TableName: 'bjss.poker_voters',
         Item: {
-            connection_id: {S: event.requestContext.connectionId}
+            connection_id: {S: event.requestContext.connectionId},
+            room_id: {S: "noroom"},
+            voter_data: {S: JSON.stringify({})},
+            vote: {N: "0"}
         }
     };
 
     try {
-        await ddb.putItem(params).promise();
+        await ddb.putItem(params).promise()
 
         return {
             statusCode: 200,
@@ -20,7 +23,7 @@ exports.handler = async (event) => {
     } catch (err) {
         return {
             statusCode: 500,
-            body: JSON.stringify(err),
+            body: JSON.stringify("Error!" + err),
         };
     }
 };
