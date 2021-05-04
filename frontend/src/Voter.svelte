@@ -29,7 +29,11 @@
 <main>
     <div class="{ hasVoted && !$roomstore.votes_revealed ? 'voted' : ''}">
         <span class="vote">{ vote === "0" ? '' : vote }</span>
+{#if id === $votersstore.us}
+        <span class="name us">{ name } (You)</span>
+{:else}
         <span class="name">{ name }</span>
+{/if}
     </div>
 </main>
 
@@ -54,6 +58,10 @@
     div .name {
         margin-top: auto;
         height: 20px;
+    }
+
+    div .name.us {
+        font-weight: bold;
     }
 
     div.voted {
