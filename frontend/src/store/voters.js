@@ -63,8 +63,6 @@ export default (function () {
                 "action": "placevote",
                 "data": value
             }));
-
-            console.log("placevote command SENT");
         }
     }
 })();

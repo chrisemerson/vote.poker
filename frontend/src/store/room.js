@@ -61,8 +61,6 @@ export default (function () {
                 "settings": {}
             }
         }));
-
-        console.log("createroom command SENT");
     };
 
     const join = function (room_id, name) {
@@ -73,8 +71,6 @@ export default (function () {
                 "name": name
             }
         }));
-
-        console.log("joinroom command SENT");
     };
 
     const changeSettings = function (new_settings) {
@@ -94,8 +90,6 @@ export default (function () {
                 "settings": new_settings
             }
         }));
-
-        console.log("changeroomsettings command SENT");
     };
 
     const revealVotes = function () {
@@ -105,8 +99,6 @@ export default (function () {
                 "room_id": room_id
             }
         }));
-
-        console.log("revealvotes command SENT");
     };
 
     const resetVotes = function () {
@@ -116,8 +108,6 @@ export default (function () {
                 "room_id": room_id
             }
         }));
-
-        console.log("resetvotes command SENT");
     };
 
     return {
