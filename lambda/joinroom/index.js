@@ -9,6 +9,7 @@ const api = new aws.ApiGatewayManagementApi({
 
 exports.handler = async (event) => {
     const roomID = JSON.parse(event.body).data.room_id;
+    const name = JSON.parse(event.body).data.name;
     const connectionID = event.requestContext.connectionId;
 
     let ddbUpdateParams = {
@@ -16,9 +17,10 @@ exports.handler = async (event) => {
         Key: {
             "connection_id": {S: connectionID}
         },
-        UpdateExpression: "SET room_id = :r",
+        UpdateExpression: "SET room_id = :r, voter_name = :n",
         ExpressionAttributeValues: {
-            ":r": {S: roomID}
+            ":r": {S: roomID},
+            ":n": {S: name}
         }
     };
 
@@ -40,33 +42,39 @@ exports.handler = async (event) => {
 
     try {
         await ddb.updateItem(ddbUpdateParams).promise();
-        let roomQueryResponse = await ddb.getItem(ddbQueryRoomParams).promise();
+        const roomQueryResponse = await ddb.getItem(ddbQueryRoomParams).promise();
 
         const roomData = {
             "room_id": roomQueryResponse.Item.room_id.S,
+            "room_owner": roomQueryResponse.Item.room_owner.S,
+            "votes_revealed": roomQueryResponse.Item.votes_revealed.BOOL,
             "room_settings": JSON.parse(roomQueryResponse.Item.room_settings.S)
         };
 
-        let votersQueryResponse = await ddb.query(ddbQueryVotersParams).promise();
+        const votersQueryResponse = await ddb.query(ddbQueryVotersParams).promise();
 
         const votersData = votersQueryResponse.Items.map((voterResponseData) => {
             return {
                 voter_id: voterResponseData.connection_id.S,
-                voter_data: JSON.parse(voterResponseData.voter_data.S)
+                voter_name: voterResponseData.voter_name.S,
+                vote_placed: voterResponseData.vote_placed.BOOL
             };
         });
 
-        let apiVotersParams = {
+        const apiVotersParams = {
             ConnectionId: event.requestContext.connectionId,
             Data: Buffer.from(JSON.stringify(
                 {
                     "action": "votersupdated",
-                    "data": votersData
+                    "data": {
+                        "us": event.requestContext.connectionId,
+                        "voters": votersData
+                    }
                 }
             ))
         };
 
-        let apiRoomParams = {
+        const apiRoomParams = {
             ConnectionId: event.requestContext.connectionId,
             Data: Buffer.from(JSON.stringify(
                 {
@@ -76,21 +84,46 @@ exports.handler = async (event) => {
             ))
         };
 
-        let votersAPIResponse = api.postToConnection(apiVotersParams).promise();
-        let roomAPIResponse = api.postToConnection(apiRoomParams).promise();
+        const roomAPIResponse = api.postToConnection(apiRoomParams).promise();
+        const votersAPIResponse = api.postToConnection(apiVotersParams).promise();
+        let promises = [roomAPIResponse, votersAPIResponse];
 
-        return Promise.all([votersAPIResponse, roomAPIResponse])
+        for (const idx in votersData) {
+            const voter = votersData[idx];
+
+            const params = {
+                ConnectionId: voter.voter_id,
+                Data: Buffer.from(JSON.stringify(
+                    {
+                        "action": "votersupdated",
+                        "data": {
+                            "us": voter.voter_id,
+                            "voters": votersData
+                        }
+                    }
+                ))
+            };
+
+            promises.push(
+                api.postToConnection(params).promise()
+            );
+        }
+
+        return Promise.all(promises)
             .then(() => {
                 return {
                     statusCode: 200,
                     body: JSON.stringify("Voter " + connectionID + " has joined room " + roomID),
                 };
             })
-            .catch((err) => { throw err });
+            .catch((err) => {
+                console.log("Error!" + err);
+                throw err
+            });
     } catch (err) {
         return {
             statusCode: 500,
-            body: JSON.stringify(err),
+            body: JSON.stringify("Error!" + err),
         };
     }
 };

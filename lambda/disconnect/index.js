@@ -1,6 +1,11 @@
 const aws = require('aws-sdk');
+
 aws.config.update({region: 'eu-west-1'});
+
 const ddb = new aws.DynamoDB({apiVersion: '2012-08-10'});
+const api = new aws.ApiGatewayManagementApi({
+    endpoint: process.env.API_GATEWAY_MANAGEMENT_ENDPOINT
+});
 
 exports.handler = async (event) => {
     let params = {
@@ -11,12 +16,80 @@ exports.handler = async (event) => {
     };
 
     try {
-        await ddb.deleteItem(params).promise();
+        let voterResponse = await ddb.getItem(params).promise();
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify("Deleted Dynamo DB entry with connection ID " + event.requestContext.connectionId),
+        const roomID = voterResponse.Item.room_id.S;
+
+        let promises = [ddb.deleteItem(params).promise()];
+
+        let ddbQueryVotersParams = {
+            TableName: 'bjss.poker_voters',
+            IndexName: 'RoomIndex',
+            KeyConditionExpression: "room_id = :room_id",
+            ExpressionAttributeValues: {
+                ":room_id": {S: roomID}
+            }
         };
+
+        const votersQueryResponse = await ddb.query(ddbQueryVotersParams).promise();
+
+        const votersData = votersQueryResponse.Items
+            .filter((voterResponseData) => {
+                return voterResponseData.connection_id.S !== event.requestContext.connectionId;
+            })
+            .map((voterResponseData) => {
+            return {
+                voter_id: voterResponseData.connection_id.S,
+                voter_name: voterResponseData.voter_name.S,
+                vote_placed: voterResponseData.vote_placed.BOOL
+            };
+        });
+
+        if (votersData.length === 0) {
+            promises.push(
+                ddb
+                    .deleteItem({
+                        TableName: 'bjss.poker_rooms',
+                        Key: {
+                            room_id: {S: roomID}
+                        }
+                    })
+                    .promise()
+            );
+        } else {
+            for (const idx in votersData) {
+                const voter = votersData[idx];
+
+                const params = {
+                    ConnectionId: voter.voter_id,
+                    Data: Buffer.from(JSON.stringify(
+                        {
+                            "action": "votersupdated",
+                            "data": {
+                                "us": voter.voter_id,
+                                "voters": votersData
+                            }
+                        }
+                    ))
+                };
+
+                promises.push(
+                    api.postToConnection(params).promise()
+                );
+            }
+        }
+
+        return Promise.all(promises)
+            .then(() => {
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify("Voter " + connectionID + " has joined room " + roomID),
+                };
+            })
+            .catch((err) => {
+                console.log("Error!" + err);
+                throw err
+            });
     } catch (err) {
         return {
             statusCode: 500,

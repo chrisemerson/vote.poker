@@ -2,13 +2,15 @@
     import roomstore from './store/room';
     import Loading from './Loading.svelte';
 
+    export let room_id = "";
+
     let loading = false;
     let name = '';
 
-    function createRoom()
+    function joinRoom()
     {
         loading = true;
-        roomstore.create(name);
+        roomstore.join(room_id, name);
     }
 </script>
 
@@ -17,7 +19,7 @@
     <Loading/>
     {:else}
     <input type="text" placeholder="Enter Your Name" bind:value={name}><br>
-    <button on:click={createRoom}>Create Room</button>
+    <button on:click={joinRoom}>Join Room</button>
     {/if}
 </main>
 

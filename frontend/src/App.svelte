@@ -1,17 +1,34 @@
 <script>
     import roomstore from "./store/room";
+    import socket from "./socket";
 
     import Room from "./Room.svelte";
     import NoRoom from "./NoRoom.svelte";
+    import JoinRoom from "./JoinRoom.svelte";
+    import Loading from "./Loading.svelte";
 
-    let in_room = !!($roomstore.id && $roomstore.id !== "");
+    $: in_room = !!($roomstore.id && $roomstore.id !== "");
+
+    let connected = false;
+    let joiningroom = false;
+    let joiningroom_id = "";
+
+    if (window.location.search !== "") {
+        joiningroom = true;
+        joiningroom_id = window.location.search.substring(1);
+    }
+
+    socket.addEventListener('open', () => connected = true);
 </script>
 
 <main>
     <h1>BJSS.POKER</h1>
-
-{#if in_room }
+{#if !connected}
+    <Loading/>
+{:else if in_room }
     <Room/>
+{:else if joiningroom}
+    <JoinRoom room_id={joiningroom_id}/>
 {:else}
     <NoRoom/>
 {/if}

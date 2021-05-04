@@ -6,7 +6,6 @@ locals {
     "$disconnect"        = "disconnect"
     "$default"           = "default"
     "changeroomsettings" = "changeroomsettings"
-    "changevoterdata"    = "changevoterdata"
     "createroom"         = "createroom"
     "joinroom"           = "joinroom"
     "placevote"          = "placevote"

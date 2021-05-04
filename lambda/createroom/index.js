@@ -11,11 +11,14 @@ const api = new aws.ApiGatewayManagementApi({
 exports.handler = async (event) => {
     const roomID = uuidv4();
     const roomSettings = {};
+    const connectionID = event.requestContext.connectionId;
 
     let ddbParams = {
         TableName: 'bjss.poker_rooms',
         Item: {
             room_id: {S: roomID},
+            room_owner: {S: connectionID },
+            votes_revealed: {BOOL: false},
             room_settings: {S: JSON.stringify(roomSettings)}
         }
     };
@@ -27,6 +30,8 @@ exports.handler = async (event) => {
                 "action": "roomcreated",
                 "data": {
                     "room_id": roomID,
+                    "room_owner": connectionID,
+                    "votes_revealed": false,
                     "room_settings": roomSettings
                 }
             }
