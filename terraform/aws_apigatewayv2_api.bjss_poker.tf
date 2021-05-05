@@ -6,4 +6,8 @@ resource "aws_apigatewayv2_api" "bjss_poker" {
   api_key_selection_expression = "$request.header.x-api-key"
 
   disable_execute_api_endpoint = false
+
+  tags = {
+    project = "bjss.poker"
+  }
 }

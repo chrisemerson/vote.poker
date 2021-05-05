@@ -54,4 +54,8 @@ resource "aws_cloudfront_distribution" "bjss_poker" {
     minimum_protocol_version = "TLSv1.1_2016"
     ssl_support_method       = "sni-only"
   }
+
+  tags = {
+    project = "bjss.poker"
+  }
 }

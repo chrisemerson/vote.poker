@@ -26,4 +26,8 @@ resource "aws_dynamodb_table" "bjss_poker_voters" {
     read_capacity  = 5
     write_capacity = 5
   }
+
+  tags = {
+    project = "bjss.poker"
+  }
 }

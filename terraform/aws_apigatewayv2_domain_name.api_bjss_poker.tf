@@ -10,4 +10,8 @@ resource "aws_apigatewayv2_domain_name" "api_bjss_poker" {
   depends_on = [
     aws_acm_certificate_validation.api_bjss_poker
   ]
+
+  tags = {
+    project = "bjss.poker"
+  }
 }

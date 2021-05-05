@@ -24,4 +24,8 @@ resource "aws_apigatewayv2_stage" "bjss_poker_prod" {
       user         = "$context.identity.user"
     })
   }
+
+  tags = {
+    project = "bjss.poker"
+  }
 }

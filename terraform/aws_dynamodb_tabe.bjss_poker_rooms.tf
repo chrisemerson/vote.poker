@@ -11,4 +11,8 @@ resource "aws_dynamodb_table" "bjss_poker_rooms" {
     name = "room_id"
     type = "S"
   }
+
+  tags = {
+    project = "bjss.poker"
+  }
 }

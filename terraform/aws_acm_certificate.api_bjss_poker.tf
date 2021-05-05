@@ -9,4 +9,8 @@ resource "aws_acm_certificate" "api_bjss_poker" {
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = {
+    project = "bjss.poker"
+  }
 }

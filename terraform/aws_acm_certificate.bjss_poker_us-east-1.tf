@@ -11,4 +11,8 @@ resource "aws_acm_certificate" "bjss_poker_us-east-1" {
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = {
+    project = "bjss.poker"
+  }
 }
