@@ -6,19 +6,34 @@
     import NoRoom from "./NoRoom.svelte";
     import JoinRoom from "./JoinRoom.svelte";
     import Loading from "./Loading.svelte";
+    import RoomDoesntExist from "./RoomDoesntExist.svelte";
 
     $: in_room = !!($roomstore.id && $roomstore.id !== "");
 
     let connected = false;
     let joiningroom = false;
     let joiningroom_id = "";
+    let room_doesnt_exist_message = false;
 
     if (window.location.search !== "") {
-        joiningroom = true;
         joiningroom_id = window.location.search.substring(1);
+
+        if (joiningroom_id === "roomdoesntexist") {
+            room_doesnt_exist_message = true;
+        } else {
+            joiningroom = true;
+        }
     }
 
     socket.addEventListener('open', () => connected = true);
+
+    socket.addEventListener('message', function (event) {
+        const message = JSON.parse(event.data);
+
+        if (message.action === "roomdoesntexist") {
+            window.location.href = '/?roomdoesntexist';
+        }
+    });
 </script>
 
 <main>
@@ -30,6 +45,9 @@
 {:else if joiningroom}
     <JoinRoom room_id={joiningroom_id}/>
 {:else}
+    {#if room_doesnt_exist_message}
+    <RoomDoesntExist/>
+    {/if}
     <NoRoom/>
 {/if}
 </main>

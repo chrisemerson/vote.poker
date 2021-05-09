@@ -17,7 +17,7 @@
     <Loading/>
     {:else}
     <input type="text" placeholder="Enter Your Name" bind:value={name}><br>
-    <button on:click={createRoom}>Create Room</button>
+    <button on:click={createRoom}>Create New Room</button>
     {/if}
 </main>
 

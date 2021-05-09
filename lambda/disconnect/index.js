@@ -97,7 +97,7 @@ exports.handler = async (event) => {
             .then(() => {
                 return {
                     statusCode: 200,
-                    body: JSON.stringify("Voter " + connectionID + " has joined room " + roomID),
+                    body: JSON.stringify("Voter " + event.requestContext.connectionId + " has left room " + roomID),
                 };
             })
             .catch((err) => {
