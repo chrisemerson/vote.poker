@@ -31,18 +31,32 @@ exports.handler = async (event) => {
             }
         };
 
+        let ddbQueryRoomParams = {
+            TableName: 'bjss.poker_rooms',
+            Key: {
+                room_id: {S: roomID}
+            }
+        };
+
         const votersQueryResponse = await ddb.query(ddbQueryVotersParams).promise();
+        const roomQueryResponse = await ddb.getItem(ddbQueryRoomParams).promise();
 
         const votersData = votersQueryResponse.Items
             .filter((voterResponseData) => {
                 return voterResponseData.connection_id.S !== event.requestContext.connectionId;
             })
             .map((voterResponseData) => {
-            return {
-                voter_id: voterResponseData.connection_id.S,
-                voter_name: voterResponseData.voter_name.S,
-                vote_placed: voterResponseData.vote_placed.BOOL
-            };
+                let voterData = {
+                    voter_id: voterResponseData.connection_id.S,
+                    voter_name: voterResponseData.voter_name.S,
+                    vote_placed: voterResponseData.vote_placed.BOOL
+                };
+
+                if (roomQueryResponse.Item.votes_revealed.BOOL) {
+                    voterData.vote = voterResponseData.vote.S;
+                }
+
+                return voterData;
         });
 
         if (votersData.length === 0) {

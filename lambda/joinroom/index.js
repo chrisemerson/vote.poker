@@ -54,11 +54,17 @@ exports.handler = async (event) => {
         const votersQueryResponse = await ddb.query(ddbQueryVotersParams).promise();
 
         const votersData = votersQueryResponse.Items.map((voterResponseData) => {
-            return {
+            let voterData = {
                 voter_id: voterResponseData.connection_id.S,
                 voter_name: voterResponseData.voter_name.S,
                 vote_placed: voterResponseData.vote_placed.BOOL
             };
+
+            if (roomQueryResponse.Item.votes_revealed.BOOL) {
+                voterData.vote = voterResponseData.vote.S;
+            }
+
+            return voterData;
         });
 
         const apiVotersParams = {
