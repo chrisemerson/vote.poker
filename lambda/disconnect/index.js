@@ -59,7 +59,7 @@ exports.handler = async (event) => {
                 return voterData;
         });
 
-        if (votersData.length === 0) {
+        if (roomID !== "noroom" && votersData.length === 0) {
             promises.push(
                 ddb
                     .deleteItem({

@@ -63,6 +63,28 @@ export default (function () {
                 "action": "placevote",
                 "data": value
             }));
+        },
+        changeName: (newName) => {
+            update((voter_info) => {
+                return {
+                    us: voter_info.us,
+                    my_vote: voter_info.my_vote,
+                    voters: voter_info.voters.map((v) => {
+                        let newv = {...v};
+
+                        if (v.voter_id === voter_info.us) {
+                            newv.voter_name = newName;
+                        }
+
+                        return newv;
+                    })
+                }
+            });
+
+            socket.send(JSON.stringify({
+                "action": "changename",
+                "data": newName
+            }));
         }
     }
 })();

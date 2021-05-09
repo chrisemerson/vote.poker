@@ -5,8 +5,10 @@
     export let id = null;
 
     let name = "";
+    let new_name = "";
     let vote = "";
     let hasVoted;
+    let changingName = false;
 
     $: {
         const thisVoter = $votersstore.voters.filter((v) => v.voter_id === id)[0];
@@ -24,13 +26,29 @@
         hasVoted = thisVoter.vote_placed;
     }
 
+    function changeName () {
+        new_name = name;
+        changingName = true;
+    }
+
+    function submitNameChange () {
+        votersstore.changeName(new_name);
+        changingName = false;
+    }
 </script>
 
 <main>
     <div class="{ hasVoted && !$roomstore.votes_revealed ? 'voted' : ''}">
         <span class="vote">{ vote === "0" ? '' : vote }</span>
 {#if id === $votersstore.us}
-        <span class="name us">{ name } (You)</span>
+    {#if changingName}
+        <input type="text" size="10" bind:value="{new_name}"/>
+        <button on:click={submitNameChange}>Change Name</button>
+
+        <span class="name us">(You)</span>
+    {:else}
+        <span class="name us"><a on:click={changeName}>{ name }</a> (You)</span>
+    {/if}
 {:else}
         <span class="name">{ name }</span>
 {/if}
@@ -66,5 +84,9 @@
 
     div.voted {
         background: #ccddff;
+    }
+
+    a {
+        cursor: pointer;
     }
 </style>

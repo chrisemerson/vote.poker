@@ -8,7 +8,7 @@ const api = new aws.ApiGatewayManagementApi({
 });
 
 exports.handler = async (event) => {
-    const name = JSON.parse(event.body).data.name;
+    const name = JSON.parse(event.body).data;
     const connectionID = event.requestContext.connectionId;
 
     let ddbUpdateParams = {
@@ -30,7 +30,7 @@ exports.handler = async (event) => {
     }
 
     try {
-        const voterUpdateResponse = await ddb.updateItem(ddbUpdateParams).promise();
+        await ddb.updateItem(ddbUpdateParams).promise();
         const voterQueryResponse = await ddb.getItem(ddbQueryVoterParams).promise();
 
         const roomID = voterQueryResponse.Item.room_id.S;
