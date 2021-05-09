@@ -5,6 +5,7 @@ locals {
     "$connect"           = "connect"
     "$disconnect"        = "disconnect"
     "$default"           = "default"
+    "changename"         = "changename"
     "changeroomsettings" = "changeroomsettings"
     "createroom"         = "createroom"
     "joinroom"           = "joinroom"

@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "aws-sdk": "^2.899.0"
+    "aws-sdk": "^2.903.0"
   }
 }
