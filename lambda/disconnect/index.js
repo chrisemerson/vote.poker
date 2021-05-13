@@ -16,10 +16,16 @@ exports.handler = async (event) => {
     };
 
     try {
+        console.log("Querying voters table for the disconnecting voter");
         let voterResponse = await ddb.getItem(params).promise();
+
+        console.log("Response: ", voterResponse);
 
         const roomID = voterResponse.Item.room_id.S;
 
+        console.log("Room ID is: " + roomID);
+
+        console.log("Deleting user from voters table...");
         let promises = [ddb.deleteItem(params).promise()];
 
         let ddbQueryVotersParams = {
@@ -38,8 +44,15 @@ exports.handler = async (event) => {
             }
         };
 
+        console.log("Querying the voters table for any other voters in the room");
         const votersQueryResponse = await ddb.query(ddbQueryVotersParams).promise();
+
+        console.log("Response: ", votersQueryResponse);
+
+        console.log("Querying the rooms table for the current room");
         const roomQueryResponse = await ddb.getItem(ddbQueryRoomParams).promise();
+
+        console.log("Response: ", roomQueryResponse);
 
         const votersData = votersQueryResponse.Items
             .filter((voterResponseData) => {
@@ -59,7 +72,11 @@ exports.handler = async (event) => {
                 return voterData;
         });
 
+        console.log("Current voters left in room: ", votersData);
+        console.log("There are " + votersData.length + " voters left in the room " + roomID);
+
         if (roomID !== "noroom" && votersData.length === 0) {
+            console.log("Deleting room " + roomID);
             promises.push(
                 ddb
                     .deleteItem({
@@ -71,6 +88,7 @@ exports.handler = async (event) => {
                     .promise()
             );
         } else {
+            console.log("Voters still left in room, update all other users with disconnection");
             for (const idx in votersData) {
                 const voter = votersData[idx];
 
@@ -92,6 +110,8 @@ exports.handler = async (event) => {
                 );
             }
         }
+
+        console.log("All done! Time for promises to resolve and return status to be set...");
 
         return Promise.all(promises)
             .then(() => {
