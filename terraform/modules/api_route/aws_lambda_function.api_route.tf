@@ -4,6 +4,8 @@ resource "aws_lambda_function" "api_route" {
   runtime = "nodejs14.x"
   handler = "index.handler"
 
+  memory_size = 256
+
   role = var.lambda_role.arn
 
   publish = true
