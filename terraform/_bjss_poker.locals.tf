@@ -9,6 +9,7 @@ locals {
     "changeroomsettings" = "changeroomsettings"
     "createroom"         = "createroom"
     "joinroom"           = "joinroom"
+    "ping"               = "ping"
     "placevote"          = "placevote"
     "resetvotes"         = "resetvotes"
     "revealvotes"        = "revealvotes"
