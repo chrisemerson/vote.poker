@@ -2,7 +2,7 @@ const socket = new WebSocket('wss://api.bjss.poker');
 
 socket.addEventListener('open', () => {
     //Default AWS timeout is 10 mins so ping server with message every 5 mins to stay connected
-    setTimeout(() => {
+    setInterval(() => {
         socket.send(JSON.stringify({
             "action": "ping"
         }));
