@@ -7,6 +7,7 @@
     import JoinRoom from "./JoinRoom.svelte";
     import Loading from "./Loading.svelte";
     import RoomDoesntExist from "./RoomDoesntExist.svelte";
+    import ExpiryNotice from "./ExpiryNotice.svelte";
 
     $: in_room = !!($roomstore.id && $roomstore.id !== "");
 
@@ -37,6 +38,8 @@
 </script>
 
 <main>
+    <ExpiryNotice />
+
     <h1>BJSS.POKER</h1>
 {#if !connected}
     <Loading/>
@@ -55,7 +58,7 @@
 <style>
     main {
         text-align: center;
-        padding: 1em;
+        padding: 0;
         max-width: 240px;
         margin: 0 auto;
     }
