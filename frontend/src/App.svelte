@@ -20,7 +20,9 @@
     if (window.location.search !== "") {
         joiningroom_id = window.location.search.substring(1);
 
-        if (joiningroom_id === "redirect") {
+        if (joiningroom_id === "redirect/") {
+            window.location.href = '/?redirect'
+        } else if (joiningroom_id === "redirect") {
             redirect_message = true;
         } else if (joiningroom_id === "roomdoesntexist") {
             room_doesnt_exist_message = true;
