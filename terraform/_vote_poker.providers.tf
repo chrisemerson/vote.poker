@@ -28,7 +28,7 @@ terraform {
   backend "s3" {
     profile = "cemerson"
     region  = "eu-west-1"
-    bucket  = "devops.bjss.poker"
+    bucket  = "devops.vote.poker"
     key     = "terraform/terraform.tfstate"
   }
 }

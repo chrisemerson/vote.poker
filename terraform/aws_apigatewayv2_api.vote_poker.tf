@@ -1,4 +1,4 @@
-resource "aws_apigatewayv2_api" "bjss_poker" {
+resource "aws_apigatewayv2_api" "vote_poker" {
   name          = var.domain_name
   protocol_type = "WEBSOCKET"
 
@@ -7,7 +7,5 @@ resource "aws_apigatewayv2_api" "bjss_poker" {
 
   disable_execute_api_endpoint = false
 
-  tags = {
-    project = "bjss.poker"
-  }
+  tags = var.global_tags
 }

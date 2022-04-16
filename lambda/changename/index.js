@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     const connectionID = event.requestContext.connectionId;
 
     let ddbUpdateParams = {
-        TableName: 'bjss.poker_voters',
+        TableName: 'vote_poker.voters',
         Key: {
             connection_id: {S: connectionID}
         },
@@ -23,7 +23,7 @@ exports.handler = async (event) => {
     };
 
     let ddbQueryVoterParams = {
-        TableName: 'bjss.poker_voters',
+        TableName: 'vote_poker.voters',
         Key: {
             connection_id: {S: connectionID}
         }
@@ -36,14 +36,14 @@ exports.handler = async (event) => {
         const roomID = voterQueryResponse.Item.room_id.S;
 
         let ddbQueryRoomParams = {
-            TableName: 'bjss.poker_rooms',
+            TableName: 'vote_poker.rooms',
             Key: {
                 room_id: {S: roomID}
             }
         };
 
         let ddbQueryVotersParams = {
-            TableName: 'bjss.poker_voters',
+            TableName: 'vote_poker.voters',
             IndexName: 'RoomIndex',
             KeyConditionExpression: "room_id = :room_id",
             ExpressionAttributeValues: {

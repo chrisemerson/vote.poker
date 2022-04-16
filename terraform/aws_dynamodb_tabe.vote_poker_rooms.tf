@@ -1,4 +1,4 @@
-resource "aws_dynamodb_table" "bjss_poker_rooms" {
+resource "aws_dynamodb_table" "vote_poker_rooms" {
   name = var.rooms_table_name
 
   billing_mode   = "PROVISIONED"
@@ -12,7 +12,5 @@ resource "aws_dynamodb_table" "bjss_poker_rooms" {
     type = "S"
   }
 
-  tags = {
-    project = "bjss.poker"
-  }
+  tags = var.global_tags
 }

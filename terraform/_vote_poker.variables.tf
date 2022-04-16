@@ -13,7 +13,7 @@ variable "aws_profile" {
 variable "domain_name" {
   type        = string
   description = "Domain name to use for the application"
-  default     = "bjss.poker"
+  default     = "vote.poker"
 }
 
 variable "api_sub_domain" {
@@ -31,11 +31,20 @@ variable "dns_ttl" {
 variable "voters_table_name" {
   type        = string
   description = "Name of the dynamo DB table for storing voter information"
-  default     = "bjss.poker_voters"
+  default     = "vote_poker.voters"
 }
 
 variable "rooms_table_name" {
   type        = string
   description = "Name of the dynamo DB table for storing room information"
-  default     = "bjss.poker_rooms"
+  default     = "vote_poker.rooms"
+}
+
+variable "global_tags" {
+  type        = map(string)
+  description = "Global tags to apply to all items that support tagging"
+
+  default = {
+    project = "vote.poker"
+  }
 }

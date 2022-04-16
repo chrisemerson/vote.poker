@@ -20,3 +20,13 @@ variable "lambda_role" {
 variable "api_gateway" {
   description = "API Gateway to attach route to"
 }
+
+variable "global_tags" {
+  type        = map(string)
+  description = "Global tags to apply to all items that support tagging"
+}
+
+variable "function_name_prefix" {
+  type        = string
+  description = "Prefix to use for lambda functions"
+}

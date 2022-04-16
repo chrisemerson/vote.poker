@@ -1,10 +1,10 @@
-data "aws_iam_policy_document" "bjss_poker_s3_bucket" {
+data "aws_iam_policy_document" "vote_poker_s3_bucket" {
   statement {
     effect = "Allow"
 
     principals {
       identifiers = [
-        aws_cloudfront_origin_access_identity.bjss_poker.iam_arn
+        aws_cloudfront_origin_access_identity.vote_poker.iam_arn
       ]
 
       type = "AWS"
@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "bjss_poker_s3_bucket" {
     ]
 
     resources = [
-      "${aws_s3_bucket.bjss_poker.arn}/*"
+      "${aws_s3_bucket.vote_poker.arn}/*"
     ]
   }
 }

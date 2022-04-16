@@ -1,4 +1,4 @@
-resource "aws_dynamodb_table" "bjss_poker_voters" {
+resource "aws_dynamodb_table" "vote_poker_voters" {
   name = var.voters_table_name
 
   billing_mode   = "PROVISIONED"
@@ -27,7 +27,5 @@ resource "aws_dynamodb_table" "bjss_poker_voters" {
     write_capacity = 5
   }
 
-  tags = {
-    project = "bjss.poker"
-  }
+  tags = var.global_tags
 }

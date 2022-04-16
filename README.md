@@ -1,4 +1,4 @@
-# BJSS Planning Poker
+# vote.poker Planning Poker
 
 ## Frontend
 
@@ -15,7 +15,7 @@ following commands to aid development:
 
 The lambda functions are contained in `lambdas/`, each being handled by the index.js file and handler function within
 each lambda directory. These are then mapped to websocket API actions via the `lambda_route_mapping` local in the
-`terraform/_bjss_poker.locals.tf` file.
+`terraform/_vote_poker.locals.tf` file.
 
 ## Terraform
 

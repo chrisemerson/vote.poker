@@ -9,7 +9,7 @@ const api = new aws.ApiGatewayManagementApi({
 
 exports.handler = async (event) => {
     let params = {
-        TableName: 'bjss.poker_voters',
+        TableName: 'vote_poker.voters',
         Key: {
             connection_id: {S: event.requestContext.connectionId}
         }
@@ -29,7 +29,7 @@ exports.handler = async (event) => {
         let promises = [ddb.deleteItem(params).promise()];
 
         let ddbQueryVotersParams = {
-            TableName: 'bjss.poker_voters',
+            TableName: 'vote_poker.voters',
             IndexName: 'RoomIndex',
             KeyConditionExpression: "room_id = :room_id",
             ExpressionAttributeValues: {
@@ -38,7 +38,7 @@ exports.handler = async (event) => {
         };
 
         let ddbQueryRoomParams = {
-            TableName: 'bjss.poker_rooms',
+            TableName: 'vote_poker.rooms',
             Key: {
                 room_id: {S: roomID}
             }
@@ -80,7 +80,7 @@ exports.handler = async (event) => {
             promises.push(
                 ddb
                     .deleteItem({
-                        TableName: 'bjss.poker_rooms',
+                        TableName: 'vote_poker.rooms',
                         Key: {
                             room_id: {S: roomID}
                         }

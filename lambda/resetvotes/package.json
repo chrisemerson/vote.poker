@@ -1,5 +1,5 @@
 {
-  "name": "bjss-poker-lambda-resetvotes",
+  "name": "vote-poker-lambda-resetvotes",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "api_route" {
-  function_name = "bjss_poker_${var.lambda_function_name}"
+  function_name = "${var.function_name_prefix}${var.lambda_function_name}"
 
   runtime = "nodejs14.x"
   handler = "index.handler"
@@ -19,7 +19,5 @@ resource "aws_lambda_function" "api_route" {
     }
   }
 
-  tags = {
-    project = "bjss.poker"
-  }
+  tags = var.global_tags
 }

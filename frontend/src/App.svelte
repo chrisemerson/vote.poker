@@ -37,7 +37,7 @@
 </script>
 
 <main>
-    <h1>BJSS.POKER</h1>
+    <h1>VOTE.POKER</h1>
 {#if !connected}
     <Loading/>
 {:else if in_room }

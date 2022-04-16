@@ -1,4 +1,4 @@
-const socket = new WebSocket('wss://api.bjss.poker');
+const socket = new WebSocket('wss://api.vote.poker');
 
 socket.addEventListener('open', () => {
     //Default AWS timeout is 10 mins so ping server with message every 5 mins to stay connected

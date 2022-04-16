@@ -1,5 +1,5 @@
 {
-  "name": "bjss-poker-lambda-revealvotes",
+  "name": "vote-poker-lambda-revealvotes",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

@@ -4,7 +4,7 @@ const ddb = new aws.DynamoDB({apiVersion: '2012-08-10'});
 
 exports.handler = async (event) => {
     let params = {
-        TableName: 'bjss.poker_voters',
+        TableName: 'vote_poker.voters',
         Item: {
             connection_id: {S: event.requestContext.connectionId},
             room_id: {S: "noroom"},

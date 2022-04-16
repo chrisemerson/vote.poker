@@ -1,4 +1,4 @@
-resource "aws_cloudfront_distribution" "bjss_poker" {
+resource "aws_cloudfront_distribution" "vote_poker" {
   default_root_object = "index.html"
   is_ipv6_enabled     = true
   price_class         = "PriceClass_100"
@@ -10,11 +10,11 @@ resource "aws_cloudfront_distribution" "bjss_poker" {
   enabled = true
 
   origin {
-    domain_name = aws_s3_bucket.bjss_poker.bucket_domain_name
-    origin_id   = "S3-${aws_s3_bucket.bjss_poker.id}"
+    domain_name = aws_s3_bucket.vote_poker.bucket_domain_name
+    origin_id   = "S3-${aws_s3_bucket.vote_poker.id}"
 
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.bjss_poker.cloudfront_access_identity_path
+      origin_access_identity = aws_cloudfront_origin_access_identity.vote_poker.cloudfront_access_identity_path
     }
   }
 
@@ -45,17 +45,15 @@ resource "aws_cloudfront_distribution" "bjss_poker" {
       query_string = false
     }
 
-    target_origin_id       = "S3-${aws_s3_bucket.bjss_poker.id}"
+    target_origin_id       = "S3-${aws_s3_bucket.vote_poker.id}"
     viewer_protocol_policy = "redirect-to-https"
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.bjss_poker_us-east-1.arn
+    acm_certificate_arn      = aws_acm_certificate.vote_poker_us-east-1.arn
     minimum_protocol_version = "TLSv1.1_2016"
     ssl_support_method       = "sni-only"
   }
 
-  tags = {
-    project = "bjss.poker"
-  }
+  tags = var.global_tags
 }

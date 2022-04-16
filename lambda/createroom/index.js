@@ -14,7 +14,7 @@ exports.handler = async (event) => {
     const connectionID = event.requestContext.connectionId;
 
     let ddbParams = {
-        TableName: 'bjss.poker_rooms',
+        TableName: 'vote_poker.rooms',
         Item: {
             room_id: {S: roomID},
             room_owner: {S: connectionID },

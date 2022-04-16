@@ -1,7 +1,7 @@
-resource "aws_acm_certificate" "bjss_poker_us-east-1" {
+resource "aws_acm_certificate" "vote_poker_us-east-1" {
   provider = aws.useast1
 
-  domain_name       = aws_route53_zone.bjss_poker.name
+  domain_name       = aws_route53_zone.vote_poker.name
   validation_method = "DNS"
 
   options {
@@ -12,7 +12,5 @@ resource "aws_acm_certificate" "bjss_poker_us-east-1" {
     create_before_destroy = true
   }
 
-  tags = {
-    project = "bjss.poker"
-  }
+  tags = var.global_tags
 }

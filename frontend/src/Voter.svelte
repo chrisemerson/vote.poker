@@ -47,7 +47,7 @@
 
         <span class="name us">(You)</span>
     {:else}
-        <span class="name us"><a on:click={changeName}>{ name }</a> (You)</span>
+        <span class="name us"><span class="changename" on:click={changeName}>{ name }</span> (You)</span>
     {/if}
 {:else}
         <span class="name">{ name }</span>
@@ -79,14 +79,19 @@
     }
 
     div .name.us {
-        font-weight: bold;
+      font-weight: bold;
+    }
+
+    div .name.us .changename {
+      color: rgb(0,100,200);
+      cursor: pointer;
+    }
+
+    div .name.us .changename:hover {
+      text-decoration: underline;
     }
 
     div.voted {
         background: #ccddff;
-    }
-
-    a {
-        cursor: pointer;
     }
 </style>
