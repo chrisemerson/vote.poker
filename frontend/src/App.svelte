@@ -7,6 +7,7 @@
     import JoinRoom from "./JoinRoom.svelte";
     import Loading from "./Loading.svelte";
     import RoomDoesntExist from "./RoomDoesntExist.svelte";
+    import RedirectMessage from "./RedirectMessage.svelte";
 
     $: in_room = !!($roomstore.id && $roomstore.id !== "");
 
@@ -14,11 +15,14 @@
     let joiningroom = false;
     let joiningroom_id = "";
     let room_doesnt_exist_message = false;
+    let redirect_message = false;
 
     if (window.location.search !== "") {
         joiningroom_id = window.location.search.substring(1);
 
-        if (joiningroom_id === "roomdoesntexist") {
+        if (joiningroom_id === "redirect") {
+            redirect_message = true;
+        } else if (joiningroom_id === "roomdoesntexist") {
             room_doesnt_exist_message = true;
         } else {
             joiningroom = true;
@@ -45,8 +49,10 @@
 {:else if joiningroom}
     <JoinRoom room_id={joiningroom_id}/>
 {:else}
-    {#if room_doesnt_exist_message}
-    <RoomDoesntExist/>
+    {#if redirect_message}
+        <RedirectMessage/>
+    {:else if room_doesnt_exist_message}
+        <RoomDoesntExist/>
     {/if}
     <NoRoom/>
 {/if}
