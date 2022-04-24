@@ -1,4 +1,4 @@
-resource "aws_s3_bucket_object" "vote_poker" {
+resource "aws_s3_object" "vote_poker" {
   for_each = fileset("${path.root}/../frontend/public/", "**")
 
   bucket = aws_s3_bucket.vote_poker.id
