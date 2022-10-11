@@ -23,10 +23,8 @@
     }
 </script>
 
-<main>
 {#if $roomstore.votes_revealed}
     <button on:click={resetVotes} disabled={disable_buttons}>Reset Votes</button>
 {:else}
     <button on:click={revealVotes} disabled={disable_buttons}>Reveal Votes</button>
 {/if}
-</main>

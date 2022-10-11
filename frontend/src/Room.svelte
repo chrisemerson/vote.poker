@@ -8,24 +8,22 @@
     import RoomControls from "./RoomControls.svelte";
 </script>
 
-<main>
-    <RoomLink />
+<RoomLink />
 
 {#if $votersstore.us === $roomstore.owner}
     <RoomControls />
 {/if}
 
-    <div id="voters">
-{#each $votersstore.voters.filter((v) => v.voter_id === $votersstore.us) as voter}
+<div id="voters">
+    {#each $votersstore.voters.filter((v) => v.voter_id === $votersstore.us) as voter}
         <Voter id={voter.voter_id} />
-{/each}
-{#each $votersstore.voters.filter((v) => v.voter_id !== $votersstore.us) as voter}
+    {/each}
+    {#each $votersstore.voters.filter((v) => v.voter_id !== $votersstore.us) as voter}
         <Voter id={voter.voter_id} />
-{/each}
-    </div>
+    {/each}
+</div>
 
-    <VotingOptions />
-</main>
+<VotingOptions />
 
 <style>
     #voters {

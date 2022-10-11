@@ -1,3 +1,1 @@
-<main>
-  <img src="loading.svg" alt="Loading...">
-</main>
+<img src="loading.svg" alt="Loading...">

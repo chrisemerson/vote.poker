@@ -16,11 +16,9 @@
     }
 </script>
 
-<main>
-    <div class="{ (selected ? 'selected' : '') + ' ' + (!$roomstore.votes_revealed ? 'selectable' : '')}" on:click={ () => placeVote(value) }>
-        { value }
-    </div>
-</main>
+<div class="{ (selected ? 'selected' : '') + ' ' + (!$roomstore.votes_revealed ? 'selectable' : '')}" on:click={ () => placeVote(value) }>
+    { value }
+</div>
 
 <style>
     div {
