@@ -15,7 +15,8 @@
 
     function handleKeyUp(event)
     {
-        if (event.code === 'Enter')
+        const submitKeys = ['Enter', 'NumpadEnter']
+        if (submitKeys.includes(event.code))
         {
             joinRoom();
         }
