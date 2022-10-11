@@ -10,13 +10,22 @@
         loading = true;
         roomstore.create(name);
     }
+
+    function handleKeyUp(event)
+    {
+        const submitKeys = ['Enter', 'NumpadEnter']
+        if (submitKeys.includes(event.code))
+        {
+            createRoom();
+        }
+    }
 </script>
 
 <main>
     {#if loading}
     <Loading/>
     {:else}
-    <input type="text" placeholder="Enter Your Name" bind:value={name}><br>
+    <input type="text" placeholder="Enter Your Name" bind:value={name} on:keyup={handleKeyUp}><br>
     <button on:click={createRoom}>Create New Room</button>
     {/if}
 </main>
