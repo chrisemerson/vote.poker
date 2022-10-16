@@ -21,3 +21,6 @@ each lambda directory. These are then mapped to websocket API actions via the `l
 
 All contained within `terraform/`. Terraform is also used to handle deployments, reading code from the `lambdas/` and
 `frontend/public/` directories and uploading them to AWS Lambda and AWS S3 respectively.
+
+Both `zip` and `jq` must be available on the environment that terraform is run in, as well as support for running bash
+files.
