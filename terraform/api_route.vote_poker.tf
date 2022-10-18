@@ -1,4 +1,4 @@
-module "api_route2" {
+module "api_route" {
   source = "./modules/api_route"
 
   for_each = local.lambda_route_mapping
