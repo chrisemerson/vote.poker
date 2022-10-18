@@ -61,6 +61,17 @@
 </main>
 
 <style>
+     :global(body) {
+        background-color: white;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :global(body) {
+            background-color: #2C2C2C;
+            color: white;
+        }
+    }
+    
     main {
         text-align: center;
         padding: 1em;
