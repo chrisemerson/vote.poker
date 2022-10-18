@@ -2,5 +2,7 @@
   "name": "vote-poker-lambda-ping",
   "version": "1.0.0",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "vote-poker-common": "file:../common"
+  }
 }

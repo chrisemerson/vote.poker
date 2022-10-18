@@ -10,8 +10,8 @@ resource "aws_lambda_function" "api_route" {
 
   publish = true
 
-  filename         = data.archive_file.api_route.output_path
-  source_code_hash = data.archive_file.api_route.output_base64sha256
+  filename         = data.external.archive_api_route.result.output_path
+  source_code_hash = data.external.archive_api_route.result.output_hash
 
   environment {
     variables = {
