@@ -12,13 +12,22 @@
         loading = true;
         roomstore.join(room_id, name);
     }
+
+    function handleKeyUp(event)
+    {
+        const submitKeys = ['Enter', 'NumpadEnter']
+        if (submitKeys.includes(event.code))
+        {
+            joinRoom();
+        }
+    }
 </script>
 
 <main>
     {#if loading}
     <Loading/>
     {:else}
-    <input type="text" placeholder="Enter Your Name" bind:value={name}><br>
+    <input type="text" placeholder="Enter Your Name" bind:value={name} on:keyup={handleKeyUp}><br>
     <button on:click={joinRoom}>Join Room</button>
     {/if}
 </main>
