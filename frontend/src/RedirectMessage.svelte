@@ -1,8 +1,6 @@
-<main>
-    <div>
-        <p>Please bookmark the new address - <a href="https://vote.poker">https://vote.poker</a></p>
-    </div>
-</main>
+<div>
+    <p>Please bookmark the new address - <a href="https://vote.poker">https://vote.poker</a></p>
+</div>
 
 <style>
     div {

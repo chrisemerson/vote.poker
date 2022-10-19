@@ -1,8 +1,6 @@
-<main>
-    <div>
-        <p>The room you tried to join doesn't exist</p>
-    </div>
-</main>
+<div>
+    <p>The room you tried to join doesn't exist</p>
+</div>
 
 <style>
     div {
@@ -18,5 +16,4 @@
         color: #cc0000;
         font-weight: bold;
     }
-
 </style>

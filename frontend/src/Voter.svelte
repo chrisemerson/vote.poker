@@ -37,23 +37,20 @@
     }
 </script>
 
-<main>
-    <div class="{ hasVoted && !$roomstore.votes_revealed ? 'voted' : ''}">
-        <span class="vote">{ vote === "0" ? '' : vote }</span>
-{#if id === $votersstore.us}
-    {#if changingName}
-        <input type="text" size="10" bind:value="{new_name}"/>
-        <button on:click={submitNameChange}>Change Name</button>
-
-        <span class="name us">(You)</span>
+<div class="{ hasVoted && !$roomstore.votes_revealed ? 'voted' : ''}">
+    <span class="vote">{ vote === "0" ? '' : vote }</span>
+    {#if id === $votersstore.us}
+        {#if changingName}
+            <input type="text" size="10" bind:value="{new_name}"/>
+            <button on:click={submitNameChange}>Change Name</button>
+            <span class="name us">(You)</span>
+        {:else}
+            <span class="name us"><span class="changename" on:click={changeName}>{ name }</span> (You)</span>
+        {/if}
     {:else}
-        <span class="name us"><span class="changename" on:click={changeName}>{ name }</span> (You)</span>
-    {/if}
-{:else}
         <span class="name">{ name }</span>
-{/if}
-    </div>
-</main>
+    {/if}
+</div>
 
 <style>
     div {

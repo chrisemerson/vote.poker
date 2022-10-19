@@ -23,14 +23,12 @@
     }
 </script>
 
-<main>
-    {#if loading}
+{#if loading}
     <Loading/>
-    {:else}
+{:else}
     <input type="text" placeholder="Enter Your Name" bind:value={name} on:keyup={handleKeyUp}><br>
     <button on:click={joinRoom}>Join Room</button>
-    {/if}
-</main>
+{/if}
 
 <style>
 
