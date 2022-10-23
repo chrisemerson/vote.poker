@@ -16,4 +16,15 @@
         color: #cc0000;
         font-weight: bold;
     }
+
+    @media (prefers-color-scheme: dark) {
+        div {
+            background-color: #663333;
+            box-shadow: 0 0 10px #000000;
+        }
+
+        p {
+            color: #ffcccc;
+        }
+    }
 </style>

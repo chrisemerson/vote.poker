@@ -1,6 +1,7 @@
 <script>
     import roomstore from './store/room';
     import Loading from './Loading.svelte';
+    import Button from "./Button.svelte";
 
     export let room_id = "";
 
@@ -27,7 +28,7 @@
     <Loading/>
 {:else}
     <input type="text" placeholder="Enter Your Name" bind:value={name} on:keyup={handleKeyUp}><br>
-    <button on:click={joinRoom}>Join Room</button>
+    <Button on:click={joinRoom} value="Join Room" />
 {/if}
 
 <style>

@@ -61,17 +61,6 @@
 </main>
 
 <style>
-     :global(body) {
-        background-color: white;
-    }
-
-    @media (prefers-color-scheme: dark) {
-        :global(body) {
-            background-color: #2C2C2C;
-            color: white;
-        }
-    }
-    
     main {
         text-align: center;
         padding: 1em;
@@ -85,6 +74,12 @@
         font-size: 4em;
         font-weight: 100;
     }
+
+     @media (prefers-color-scheme: dark) {
+         h1 {
+             color: #99ccff;
+         }
+     }
 
     @media (min-width: 640px) {
         main {

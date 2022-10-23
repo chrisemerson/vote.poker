@@ -54,4 +54,10 @@
         color: white;
         height: 150px;
     }
+
+    @media (prefers-color-scheme: dark) {
+        div.selectable:hover, div.selected {
+            background-color: #223355;
+        }
+    }
 </style>
