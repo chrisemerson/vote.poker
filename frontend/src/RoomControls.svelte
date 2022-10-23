@@ -1,6 +1,7 @@
 <script>
     import roomstore from './store/room';
     import socket from './socket';
+    import Button from "./Button.svelte";
 
     let disable_buttons = false;
 
@@ -24,7 +25,7 @@
 </script>
 
 {#if $roomstore.votes_revealed}
-    <button on:click={resetVotes} disabled={disable_buttons}>Reset Votes</button>
+    <Button on:click={resetVotes} disabled={disable_buttons} value="Reset Votes" />
 {:else}
-    <button on:click={revealVotes} disabled={disable_buttons}>Reveal Votes</button>
+    <Button on:click={revealVotes} disabled={disable_buttons} value="Reveal Votes" />
 {/if}

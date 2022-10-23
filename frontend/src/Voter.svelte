@@ -1,6 +1,7 @@
 <script>
     import votersstore from "./store/voters";
     import roomstore from "./store/room";
+    import Button from "./Button.svelte";
 
     export let id = null;
 
@@ -42,7 +43,7 @@
     {#if id === $votersstore.us}
         {#if changingName}
             <input type="text" size="10" bind:value="{new_name}"/>
-            <button on:click={submitNameChange}>Change Name</button>
+            <Button on:click={submitNameChange} value="Change Name" />
             <span class="name us">(You)</span>
         {:else}
             <span class="name us"><span class="changename" on:click={changeName}>{ name }</span> (You)</span>
@@ -90,5 +91,15 @@
 
     div.voted {
         background: #ccddff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        div .name.us .changename {
+            color: rgb(100, 200, 255);
+        }
+
+        div.voted {
+            background-color: #223355;
+        }
     }
 </style>

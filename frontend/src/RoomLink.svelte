@@ -11,4 +11,10 @@
         cursor: pointer;
         color: #3366ff;
     }
+
+    @media (prefers-color-scheme: dark) {
+        h2:hover {
+            color: #99ccff;
+        }
+    }
 </style>
