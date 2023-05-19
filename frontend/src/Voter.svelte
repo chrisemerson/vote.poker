@@ -7,12 +7,14 @@
 
     let name = "";
     let new_name = "";
-    let vote = "";
+    let vote;
     let hasVoted;
     let changingName = false;
+    let isUs;
 
     $: {
         const thisVoter = $votersstore.voters.filter((v) => v.voter_id === id)[0];
+        isUs = id === $votersstore.us;
 
         if ($roomstore.votes_revealed && thisVoter.vote) {
             vote = thisVoter.vote;
@@ -38,23 +40,25 @@
     }
 </script>
 
-<div class="{ hasVoted && !$roomstore.votes_revealed ? 'voted' : ''}">
+<div
+    class:voter={true}
+    class:voted={ hasVoted && !$roomstore.votes_revealed }
+    class:us={ isUs }
+    class:changing-name={ changingName }
+>
     <span class="vote">{ vote === "0" ? '' : vote }</span>
-    {#if id === $votersstore.us}
-        {#if changingName}
-            <input type="text" size="10" bind:value="{new_name}"/>
-            <Button on:click={submitNameChange} value="Change Name" />
-            <span class="name us">(You)</span>
-        {:else}
-            <span class="name us"><span class="changename" on:click={changeName}>{ name }</span> (You)</span>
-        {/if}
-    {:else}
-        <span class="name">{ name }</span>
-    {/if}
+    <div class="change-name">
+        <input type="text" size="10" bind:value="{new_name}"/>
+        <Button on:click={submitNameChange} value="Change Name" />
+        <span class="name us">(You)</span>
+    </div>
+    <span class="name">
+        <span on:click={isUs ? changeName : () => {}}>{ name }</span>
+    </span>
 </div>
 
 <style>
-    div {
+    .voter {
         display: flex;
         flex-direction: column;
         border: 1px solid black;
@@ -63,42 +67,64 @@
         padding: 10px;
         border-radius: 10px;
         margin: 0 10px;
+        order: 2;
     }
 
-    div .vote {
+    .voter.us {
+        order: 1;
+    }
+
+    .vote {
         font-size: 5em;
         margin-top: .2em;
         font-weight: bold;
     }
 
-    div .name {
+    .name {
         margin-top: auto;
         height: 20px;
     }
 
-    div .name.us {
+    .voter.us .name {
       font-weight: bold;
     }
 
-    div .name.us .changename {
+    .voter.us .name:after {
+        display: inline;
+        content: " (You)";
+    }
+
+    .voter .change-name {
+        display: none;
+    }
+
+    .voter.us.changing-name .change-name {
+        display: block;
+    }
+
+    .voter.us.changing-name .name {
+        display: none;
+    }
+
+    .voter.us .name span {
       color: rgb(0,100,200);
       cursor: pointer;
     }
 
-    div .name.us .changename:hover {
+    .voter.us .name span:hover {
       text-decoration: underline;
     }
 
-    div.voted {
+    .voter.voted {
         background: #ccddff;
     }
 
     @media (prefers-color-scheme: dark) {
-        div .name.us .changename {
+        .voter.us .name span {
             color: rgb(100, 200, 255);
         }
 
-        div.voted {
+        .voter.voted {
             background-color: #223355;
         }
     }
