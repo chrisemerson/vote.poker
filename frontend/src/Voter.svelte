@@ -2,6 +2,7 @@
     import votersstore from "./store/voters";
     import roomstore from "./store/room";
     import Button from "./Button.svelte";
+    import VoteCard from "./VoteCard.svelte";
 
     export let id = null;
 
@@ -46,27 +47,26 @@
     class:us={ isUs }
     class:changing-name={ changingName }
 >
-    <span class="vote">{ vote === "0" ? '' : vote }</span>
-    <div class="change-name">
-        <input type="text" size="10" bind:value="{new_name}"/>
-        <Button on:click={submitNameChange} value="Change Name" />
-        <span class="name us">(You)</span>
-    </div>
-    <span class="name">
-        <span on:click={isUs ? changeName : () => {}}>{ name }</span>
-    </span>
+<!--    <span class="vote">{ vote === "0" ? '' : vote }</span>-->
+<!--    <div class="change-name">-->
+<!--        <input type="text" size="10" bind:value="{new_name}"/>-->
+<!--        <Button on:click={submitNameChange} value="Change Name" />-->
+<!--        <span class="name us">(You)</span>-->
+<!--    </div>-->
+<!--    <span class="name">-->
+<!--        <span on:click={isUs ? changeName : () => {}}>{ name }</span>-->
+<!--    </span>-->
+    <VoteCard vote="{vote}" label="{name}" onLabelClick={ isUs ? changeName : () => {} }>
+        <div class="change-name">
+            <input type="text" size="10" bind:value="{new_name}"/>
+            <Button on:click={submitNameChange} value="Change Name" />
+            <span class="name us">(You)</span>
+        </div>
+    </VoteCard>
 </div>
 
 <style>
     .voter {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid black;
-        height: 200px;
-        width: 150px;
-        padding: 10px;
-        border-radius: 10px;
-        margin: 0 10px;
         order: 2;
     }
 
@@ -74,24 +74,18 @@
         order: 1;
     }
 
-    .vote {
-        font-size: 5em;
-        margin-top: .2em;
-        font-weight: bold;
-    }
-
-    .name {
-        margin-top: auto;
-        height: 20px;
-    }
-
-    .voter.us .name {
+    .voter.us :global(.label) {
       font-weight: bold;
     }
 
-    .voter.us .name:after {
+    .voter.us :global(.label:after) {
         display: inline;
         content: " (You)";
+    }
+
+    .voter.us :global(.label span) {
+        color: rgb(0,100,200);
+        cursor: pointer;
     }
 
     .voter .change-name {
@@ -102,29 +96,24 @@
         display: block;
     }
 
-    .voter.us.changing-name .name {
+    .voter.us.changing-name :global(.label) {
         display: none;
-    }
-
-    .voter.us .name span {
-      color: rgb(0,100,200);
-      cursor: pointer;
     }
 
     .voter.us .name span:hover {
       text-decoration: underline;
     }
 
-    .voter.voted {
+    .voter.voted :global(.vote-card) {
         background: #ccddff;
     }
 
     @media (prefers-color-scheme: dark) {
-        .voter.us .name span {
+        .voter.us :global(.label:after span) {
             color: rgb(100, 200, 255);
         }
 
-        .voter.voted {
+        .voter.voted :global(.vote-card) {
             background-color: #223355;
         }
     }
