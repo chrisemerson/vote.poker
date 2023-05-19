@@ -6,6 +6,7 @@
     import Voter from "./Voter.svelte";
     import VotingOptions from "./VotingOptions.svelte";
     import RoomControls from "./RoomControls.svelte";
+    import VoteSummary from "./VoteSummary.svelte";
 </script>
 
 <RoomLink />
@@ -19,6 +20,8 @@
         <Voter id={voter.voter_id} />
     {/each}
 </div>
+
+<VoteSummary />
 
 <VotingOptions />
 
