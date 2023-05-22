@@ -47,15 +47,6 @@
     class:us={ isUs }
     class:changing-name={ changingName }
 >
-<!--    <span class="vote">{ vote === "0" ? '' : vote }</span>-->
-<!--    <div class="change-name">-->
-<!--        <input type="text" size="10" bind:value="{new_name}"/>-->
-<!--        <Button on:click={submitNameChange} value="Change Name" />-->
-<!--        <span class="name us">(You)</span>-->
-<!--    </div>-->
-<!--    <span class="name">-->
-<!--        <span on:click={isUs ? changeName : () => {}}>{ name }</span>-->
-<!--    </span>-->
     <VoteCard vote="{vote}" label="{name}" onLabelClick={ isUs ? changeName : () => {} }>
         <div class="change-name">
             <input type="text" size="10" bind:value="{new_name}"/>
