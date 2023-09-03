@@ -1,10 +1,10 @@
 resource "aws_lambda_function" "api_route" {
   function_name = "${var.function_name_prefix}${var.lambda_function_name}"
 
-  runtime = "nodejs14.x"
+  runtime = "nodejs16.x"
   handler = "index.handler"
 
-  memory_size = 256
+  memory_size = 512
 
   role = var.lambda_role.arn
 

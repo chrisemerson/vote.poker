@@ -1,15 +1,17 @@
 #!/bin/bash
+set -x
 
 ARGS=$(cat -)
-INPUT_PATH=$(echo $ARGS | jq -r ".input_path")
-OUTPUT_PATH=$(echo $ARGS | jq -r ".output_path")
+INPUT_PATH=$(echo "$ARGS" | jq -r ".input_path")
+OUTPUT_PATH=$(echo "$ARGS" | jq -r ".output_path")
 
-rm -f $OUTPUT_PATH
+rm -f "$OUTPUT_PATH"
 
-cd $INPUT_PATH
-zip -rqX $OUTPUT_PATH ./*
+cd "$INPUT_PATH" || exit
 
-OUTPUT_HASH=$(cat $OUTPUT_PATH | openssl sha -binary -sha256 | base64)
+zip -rqX "$OUTPUT_PATH" ./*
+
+OUTPUT_HASH=$(cat "$OUTPUT_PATH" | openssl sha256 -binary | base64)
 
 jq -ncM \
   '{ "output_path": $output_path, "output_hash": $output_hash }' \
