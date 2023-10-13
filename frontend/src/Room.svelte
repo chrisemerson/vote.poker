@@ -6,6 +6,7 @@
     import Voter from "./Voter.svelte";
     import VotingOptions from "./VotingOptions.svelte";
     import RoomControls from "./RoomControls.svelte";
+    import VoteSummary from "./VoteSummary.svelte";
 </script>
 
 <RoomLink />
@@ -15,13 +16,12 @@
 {/if}
 
 <div id="voters">
-    {#each $votersstore.voters.filter((v) => v.voter_id === $votersstore.us) as voter}
-        <Voter id={voter.voter_id} />
-    {/each}
-    {#each $votersstore.voters.filter((v) => v.voter_id !== $votersstore.us) as voter}
+    {#each $votersstore.voters as voter}
         <Voter id={voter.voter_id} />
     {/each}
 </div>
+
+<VoteSummary />
 
 <VotingOptions />
 
