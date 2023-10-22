@@ -6,7 +6,8 @@ export default (function () {
         id: '',
         owner: '',
         votes_revealed: false,
-        settings: {}
+        settings: {},
+        controlsFrozen: false
     });
 
     let room_id = "";
@@ -28,7 +29,8 @@ export default (function () {
                         id: room_id,
                         owner: message.data.room_owner,
                         votes_revealed: message.data.votes_revealed,
-                        settings: message.data.room_settings
+                        settings: message.data.room_settings,
+                        controlsFrozen: room.controlsFrozen
                     };
                 });
 
@@ -45,7 +47,8 @@ export default (function () {
                         id: room.id,
                         owner: room.owner,
                         votes_revealed: false,
-                        settings: room.settings
+                        settings: room.settings,
+                        controlsFrozen: false
                     };
                 });
                 break;
@@ -81,7 +84,8 @@ export default (function () {
                 id: room.id,
                 owner: room.room_owner,
                 votes_revealed: room.votes_revealed,
-                settings: new_settings
+                settings: new_settings,
+                controlsFrozen: room.controlsFrozen
             };
         });
 
@@ -94,7 +98,21 @@ export default (function () {
         }));
     };
 
+    const freezeControls = function () {
+        update((room) => {
+            return {
+                id: room.id,
+                owner: room.room_owner,
+                votes_revealed: room.votes_revealed,
+                settings: room.settings,
+                controlsFrozen: true
+            };
+        });
+    }
+
     const revealVotes = function () {
+        freezeControls();
+
         socket.send(JSON.stringify({
             "action": "revealvotes",
             "data": {
@@ -104,6 +122,8 @@ export default (function () {
     };
 
     const resetVotes = function () {
+        freezeControls();
+
         socket.send(JSON.stringify({
             "action": "resetvotes",
             "data": {
