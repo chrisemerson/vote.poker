@@ -12,7 +12,6 @@
     $: roomInfoLoading = !($roomStore.id);
 
     onMount(() => {
-        console.log("Fetching room info");
         roomStore.fetchRoomInfo(room_id);
     })
 
