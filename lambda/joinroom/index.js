@@ -110,7 +110,7 @@ exports.handler = async (event) => {
                 ConnectionId: event.requestContext.connectionId,
                 Data: Buffer.from(JSON.stringify(
                     {
-                        "action": "roomsettingschanged",
+                        "action": "roomupdate",
                         "data": roomData
                     }
                 ))

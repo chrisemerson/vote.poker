@@ -20,7 +20,7 @@ export default (function () {
                 join(message.data.room_id, saved_name);
                 break;
 
-            case 'roomsettingschanged':
+            case 'roomupdate':
                 room_id = message.data.room_id;
 
                 update((room) => {
