@@ -25,12 +25,18 @@ export default (function () {
                 room_id = message.data.room_id;
 
                 update((room) => {
+                    let controlsFrozen = room.controlsFrozen;
+
+                    if (!room.votes_revealed && message.data.votes_revealed) {
+                        controlsFrozen = false;
+                    }
+
                     return {
                         id: room_id,
                         owner: message.data.room_owner,
                         votes_revealed: message.data.votes_revealed,
                         settings: message.data.room_settings,
-                        controlsFrozen: room.controlsFrozen
+                        controlsFrozen: controlsFrozen
                     };
                 });
 
