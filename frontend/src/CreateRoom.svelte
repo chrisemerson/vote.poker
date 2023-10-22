@@ -1,5 +1,5 @@
 <script>
-    import roomstore from './store/room';
+    import roomStore from './store/room';
     import Loading from './Loading.svelte';
     import Button from "./Button.svelte";
 
@@ -9,7 +9,7 @@
     function createRoom()
     {
         loading = true;
-        roomstore.create(name);
+        roomStore.create(name);
     }
 
     function handleKeyUp(event)
