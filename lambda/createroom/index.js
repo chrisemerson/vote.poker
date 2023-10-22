@@ -10,7 +10,7 @@ const api = new aws.ApiGatewayManagementApi({
 
 exports.handler = async (event) => {
     const roomID = uuidv4();
-    const roomSettings = {};
+    const roomSettings = JSON.parse(event.body).data.settings;
     const connectionID = event.requestContext.connectionId;
 
     let ddbParams = {
