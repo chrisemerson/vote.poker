@@ -58,7 +58,9 @@ export default (function () {
         socket.send(JSON.stringify({
             "action": "createroom",
             "data": {
-                "settings": {}
+                "settings": {
+                    "test": "test"
+                }
             }
         }));
     };
