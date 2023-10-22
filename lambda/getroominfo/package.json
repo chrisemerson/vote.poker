@@ -1,0 +1,10 @@
+{
+  "name": "vote-poker-lambda-getroominfo",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "aws-sdk": "^2.903.0",
+    "uuid": "^8.3.2",
+    "vote-poker-common": "file:../common"
+  }
+}
