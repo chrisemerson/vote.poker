@@ -60,7 +60,9 @@ export default (function () {
         socket.send(JSON.stringify({
             "action": "createroom",
             "data": {
-                "settings": {}
+                "settings": {
+                    "test": "test"
+                }
             }
         }));
     };
@@ -113,12 +115,22 @@ export default (function () {
         }));
     };
 
+    const fetchRoomInfo = function (joining_room_id) {
+        socket.send(JSON.stringify({
+            "action": "getroominfo",
+            "data": {
+                "room_id": joining_room_id
+            }
+        }));
+    };
+
     return {
         subscribe,
         create,
         join,
         changeSettings,
         revealVotes,
-        resetVotes
+        resetVotes,
+        fetchRoomInfo
     }
 })();
