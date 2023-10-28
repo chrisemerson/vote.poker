@@ -18,10 +18,12 @@
 {#if $votersStore.us === $roomStore.owner}
     <RoomControls />
 {/if}
+{#if observers.length > 0}
 
 <div id="observers">
     <p><strong>Observers:</strong> {observers.map(v => v.voter_name.trim()).join(", ")}</p>
 </div>
+{/if}
 
 <div id="voters">
 {#each $votersStore.voters.filter(v => !v.settings.observer && v.voter_id === $votersStore.us) as voter}
