@@ -87,7 +87,7 @@ exports.handler = async (event) => {
                 ConnectionId: voter.voter_id,
                 Data: Buffer.from(JSON.stringify(
                     {
-                        "action": "roomsettingschanged",
+                        "action": "roomupdate",
                         "data": roomData
                     }
                 ))

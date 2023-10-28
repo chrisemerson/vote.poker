@@ -20,7 +20,7 @@ export default (function () {
                 join(message.data.room_id, saved_name);
                 break;
 
-            case 'roomsettingschanged':
+            case 'roomupdate':
                 room_id = message.data.room_id;
 
                 update((room) => {
@@ -52,14 +52,14 @@ export default (function () {
         }
     });
 
-    const create = function (name) {
+    const create = function (name, teams) {
         saved_name = name;
 
         socket.send(JSON.stringify({
             "action": "createroom",
             "data": {
                 "settings": {
-                    "test": "test"
+                    "teams": teams
                 }
             }
         }));
