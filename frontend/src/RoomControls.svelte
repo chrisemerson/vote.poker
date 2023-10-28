@@ -25,7 +25,7 @@
 </script>
 
 {#if $roomstore.votes_revealed}
-    <Button on:click={resetVotes} disabled={disable_buttons} value="Reset Votes" />
+    <Button on:click={resetVotes} bind:disabled={disable_buttons} value="Reset Votes" />
 {:else}
-    <Button on:click={revealVotes} disabled={disable_buttons} value="Reveal Votes" />
+    <Button on:click={revealVotes} bind:disabled={disable_buttons} value="Reveal Votes" />
 {/if}

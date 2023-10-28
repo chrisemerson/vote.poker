@@ -15,6 +15,7 @@ export default (function () {
 
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
+        console.log(message);
 
         switch (message.action) {
             case 'roomcreated':
@@ -73,7 +74,9 @@ export default (function () {
             "data": {
                 "room_id": room_id,
                 "name": name,
-                "observer": observer
+                "settings": {
+                    "observer": observer
+                }
             }
         }));
     };
