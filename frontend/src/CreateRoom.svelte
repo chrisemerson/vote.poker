@@ -30,8 +30,7 @@
     <input type="text" placeholder="Enter Your Name" bind:value={name} on:keyup={handleKeyUp}><br>
 
     <label>
-        <input type="checkbox" name="observer" value="true" bind:checked={observer}>
-        Observer
+        <input type="checkbox" name="observer" value="true" bind:checked={observer}> Observer
     </label>
 
     <div class="buttons">
