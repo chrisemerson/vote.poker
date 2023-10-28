@@ -32,7 +32,8 @@
 {/each}
 </div>
 
-{#if !$votersStore.voters.filter(v => v.voter_id === $votersStore.us)[0].settings.observer}
+{#if $votersStore.voters.filter(v => v.voter_id === $votersStore.us).length > 0
+&& !$votersStore.voters.filter(v => v.voter_id === $votersStore.us)[0].settings.observer}
 <VotingOptions />
 {/if}
 

@@ -15,7 +15,11 @@ export default (function () {
 
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
-        console.log(message);
+
+        if (!isProduction) {
+            console.log("Message received from server: " + message.action);
+            console.log(message.data);
+        }
 
         switch (message.action) {
             case 'roomcreated':
@@ -54,31 +58,37 @@ export default (function () {
         }
     });
 
+    const sendMessageToServer = function (action, messageData) {
+        if (!isProduction) {
+            console.log("Sending message to server: " + action);
+            console.log(messageData)
+        }
+
+        socket.send(JSON.stringify({
+            "action": action,
+            "data": messageData
+        }));
+    };
+
     const create = function (name, observer) {
         saved_name = name;
         saved_observer = observer;
 
-        socket.send(JSON.stringify({
-            "action": "createroom",
-            "data": {
-                "settings": {
-                    "test": "test"
-                }
+        sendMessageToServer('createroom', {
+            "settings": {
+                "test": "test"
             }
-        }));
+        })
     };
 
     const join = function (room_id, name, observer) {
-        socket.send(JSON.stringify({
-            "action": "joinroom",
-            "data": {
-                "room_id": room_id,
-                "name": name,
-                "settings": {
-                    "observer": observer
-                }
+        sendMessageToServer('joinroom', {
+            "room_id": room_id,
+            "name": name,
+            "settings": {
+                "observer": observer
             }
-        }));
+        });
     };
 
     const changeSettings = function (new_settings) {
@@ -91,40 +101,28 @@ export default (function () {
             };
         });
 
-        socket.send(JSON.stringify({
-            "action": "changeroomsettings",
-            "data": {
-                "room_id": room_id,
-                "settings": new_settings
-            }
-        }));
+        sendMessageToServer('changeroomsettings', {
+            "room_id": room_id,
+            "settings": new_settings
+        });
     };
 
     const revealVotes = function () {
-        socket.send(JSON.stringify({
-            "action": "revealvotes",
-            "data": {
-                "room_id": room_id
-            }
-        }));
+        sendMessageToServer('revealvotes', {
+            "room_id": room_id
+        });
     };
 
     const resetVotes = function () {
-        socket.send(JSON.stringify({
-            "action": "resetvotes",
-            "data": {
-                "room_id": room_id
-            }
-        }));
+        sendMessageToServer('resetvotes', {
+            "room_id": room_id
+        });
     };
 
     const fetchRoomInfo = function (joining_room_id) {
-        socket.send(JSON.stringify({
-            "action": "getroominfo",
-            "data": {
-                "room_id": joining_room_id
-            }
-        }));
+        sendMessageToServer('getroominfo', {
+            "room_id": joining_room_id
+        });
     };
 
     return {

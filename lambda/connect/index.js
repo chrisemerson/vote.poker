@@ -11,7 +11,7 @@ exports.handler = async (event) => {
             voter_name: {S: ""},
             vote_placed: {BOOL: false},
             vote: {S: "0"},
-            voter_settings: {S: ""},
+            voter_settings: {S: "{}"},
             connected: {S: (new Date()).toISOString()}
         }
     };
