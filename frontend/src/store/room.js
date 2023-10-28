@@ -53,16 +53,14 @@ export default (function () {
         }
     });
 
-    const create = function (name, observer, teams) {
+    const create = function (name, observer) {
         saved_name = name;
         saved_observer = observer;
 
         socket.send(JSON.stringify({
             "action": "createroom",
             "data": {
-                "settings": {
-                    "teams": teams
-                }
+                "settings": {}
             }
         }));
     };

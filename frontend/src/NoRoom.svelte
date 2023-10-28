@@ -4,9 +4,6 @@
     import Button from "./Button.svelte";
 
     let observer = false;
-    let useTeams = false;
-    let teams = [];
-    let defaultTeams = ['Dev', 'QA'];
     let loading = false;
     let name = '';
 
@@ -14,7 +11,7 @@
     {
         loading = true;
 
-        roomStore.create(name, observer, teams.length === 0 ? defaultTeams : teams);
+        roomStore.create(name, observer);
     }
 
     function handleKeyUp(event)
@@ -24,11 +21,6 @@
         if (submitKeys.includes(event.code)) {
             createRoom();
         }
-    }
-
-    function teamsChanged()
-    {
-        teams = document.getElementById('teams').value().trim().split("\n");
     }
 </script>
 
@@ -41,22 +33,6 @@
         <input type="checkbox" name="observer" value="true" bind:checked={observer}>
         Observer
     </label>
-
-    <label>
-        <input type="checkbox" name="teams" value="true" bind:checked={useTeams}>
-        Use Teams
-    </label>
-    {#if useTeams}
-
-    <textarea
-            id="teams"
-            name="teams"
-            rows="3"
-            placeholder={defaultTeams.join("\n")}
-            on:change={teamsChanged}
-            on:keyup={teamsChanged}
-    ></textarea>
-    {/if}
 
     <div class="buttons">
         <Button on:click={createRoom} value="Create New Room"/>
