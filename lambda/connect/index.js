@@ -10,7 +10,9 @@ exports.handler = async (event) => {
             room_id: {S: "noroom"},
             voter_name: {S: ""},
             vote_placed: {BOOL: false},
-            vote: {S: "0"}
+            vote: {S: "0"},
+            voter_settings: {S: "{}"},
+            connected: {S: (new Date()).toISOString()}
         }
     };
 
