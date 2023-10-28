@@ -10,6 +10,7 @@ const api = new aws.ApiGatewayManagementApi({
 exports.handler = async (event) => {
     const roomID = JSON.parse(event.body).data.room_id;
     const name = JSON.parse(event.body).data.name;
+    const settings = JSON.parse(event.body).data.settings;
     const connectionID = event.requestContext.connectionId;
 
     let ddbUpdateParams = {
@@ -17,10 +18,11 @@ exports.handler = async (event) => {
         Key: {
             "connection_id": {S: connectionID}
         },
-        UpdateExpression: "SET room_id = :r, voter_name = :n",
+        UpdateExpression: "SET room_id = :r, voter_name = :n, voter_settings = :s",
         ExpressionAttributeValues: {
             ":r": {S: roomID},
-            ":n": {S: name}
+            ":n": {S: name},
+            ":s": {S: JSON.stringify(settings)}
         }
     };
 
@@ -83,7 +85,8 @@ exports.handler = async (event) => {
                 let voterData = {
                     voter_id: voterResponseData.connection_id.S,
                     voter_name: voterResponseData.voter_name.S,
-                    vote_placed: voterResponseData.vote_placed.BOOL
+                    vote_placed: voterResponseData.vote_placed.BOOL,
+                    settings: voterResponseData.voter_settings.S
                 };
 
                 if (roomQueryResponse.Item.votes_revealed.BOOL) {
