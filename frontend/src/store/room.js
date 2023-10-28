@@ -11,14 +11,13 @@ export default (function () {
 
     let room_id = "";
     let saved_name = "";
-    let saved_observer = false;
 
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
 
         switch (message.action) {
             case 'roomcreated':
-                join(message.data.room_id, saved_name, saved_observer);
+                join(message.data.room_id, saved_name);
                 break;
 
             case 'roomupdate':
@@ -53,9 +52,8 @@ export default (function () {
         }
     });
 
-    const create = function (name, observer, teams) {
+    const create = function (name, teams) {
         saved_name = name;
-        saved_observer = observer;
 
         socket.send(JSON.stringify({
             "action": "createroom",
@@ -67,13 +65,12 @@ export default (function () {
         }));
     };
 
-    const join = function (room_id, name, observer) {
+    const join = function (room_id, name) {
         socket.send(JSON.stringify({
             "action": "joinroom",
             "data": {
                 "room_id": room_id,
-                "name": name,
-                "observer": observer
+                "name": name
             }
         }));
     };

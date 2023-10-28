@@ -3,7 +3,6 @@
     import Loading from './Loading.svelte';
     import Button from "./Button.svelte";
 
-    let observer = false;
     let useTeams = false;
     let teams = [];
     let defaultTeams = ['Dev', 'QA'];
@@ -14,7 +13,7 @@
     {
         loading = true;
 
-        roomStore.create(name, observer, teams.length === 0 ? defaultTeams : teams);
+        roomStore.create(name, teams.length === 0 ? defaultTeams : teams);
     }
 
     function handleKeyUp(event)
@@ -36,11 +35,6 @@
     <Loading/>
 {:else}
     <input type="text" placeholder="Enter Your Name" bind:value={name} on:keyup={handleKeyUp}><br>
-
-    <label>
-        <input type="checkbox" name="observer" value="true" bind:checked={observer}>
-        Observer
-    </label>
 
     <label>
         <input type="checkbox" name="teams" value="true" bind:checked={useTeams}>
