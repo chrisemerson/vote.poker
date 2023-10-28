@@ -11,6 +11,11 @@ export default (function () {
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
 
+        if (!isProduction) {
+            console.log("Message received from server: " + message.action);
+            console.log(message.data);
+        }
+
         switch (message.action) {
             case 'votersupdated':
                 update((voter_info) => {
@@ -40,6 +45,18 @@ export default (function () {
         }
     });
 
+    const sendMessageToServer = function (action, messageData) {
+        if (!isProduction) {
+            console.log("Sending message to server: " + action);
+            console.log(messageData)
+        }
+
+        socket.send(JSON.stringify({
+            "action": action,
+            "data": messageData
+        }));
+    };
+
     return {
         subscribe,
         placeVote: (value) => {
@@ -59,10 +76,7 @@ export default (function () {
                 }
             });
 
-            socket.send(JSON.stringify({
-                "action": "placevote",
-                "data": value
-            }));
+            sendMessageToServer('placevote', value);
         },
         changeName: (newName) => {
             update((voter_info) => {
@@ -81,10 +95,7 @@ export default (function () {
                 }
             });
 
-            socket.send(JSON.stringify({
-                "action": "changename",
-                "data": newName
-            }));
+            sendMessageToServer('changename', newName);
         }
     }
 })();
