@@ -19,7 +19,8 @@ exports.handler = async (event) => {
             room_id: {S: roomID},
             room_owner: {S: connectionID },
             votes_revealed: {BOOL: false},
-            room_settings: {S: JSON.stringify(roomSettings)}
+            room_settings: {S: JSON.stringify(roomSettings)},
+            created: {S: (new Date()).toISOString()}
         }
     };
 

@@ -61,7 +61,8 @@ exports.handler = async (event) => {
                 voter_id: voterResponseData.connection_id.S,
                 voter_name: voterResponseData.voter_name.S,
                 vote_placed: voterResponseData.vote_placed.BOOL,
-                vote: voterResponseData.vote.S
+                vote: voterResponseData.vote.S,
+                settings: JSON.parse(voterResponseData.voter_settings.S)
             };
         });
 

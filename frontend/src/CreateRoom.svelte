@@ -6,6 +6,7 @@
     let useTeams = false;
     let teams = [];
     let defaultTeams = ['Dev', 'QA'];
+    let observer = false;
     let loading = false;
     let name = '';
 
@@ -13,7 +14,7 @@
     {
         loading = true;
 
-        roomStore.create(name, teams.length === 0 ? defaultTeams : teams);
+        roomStore.create(name, teams.length === 0 ? defaultTeams : teams, observer);
     }
 
     function handleKeyUp(event)
@@ -51,6 +52,9 @@
             on:keyup={teamsChanged}
     ></textarea>
     {/if}
+    <label>
+        <input type="checkbox" name="observer" value="true" bind:checked={observer}> Observer
+    </label>
 
     <div class="buttons">
         <Button on:click={createRoom} value="Create New Room"/>
