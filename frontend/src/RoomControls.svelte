@@ -1,31 +1,20 @@
 <script>
-    import roomstore from './store/room';
-    import socket from './socket';
+    import roomStore from './store/room';
     import Button from "./Button.svelte";
 
-    let disable_buttons = false;
-
-    socket.addEventListener('message', function (event) {
-        const message = JSON.parse(event.data);
-
-        if ((message.action === 'roomsettingschanged' && message.data.votes_revealed === true) || message.action === 'votesreset') {
-            disable_buttons = false;
-        }
-    });
+    $: disableButtons = $roomStore.controlsFrozen;
 
     function resetVotes() {
-        disable_buttons = true;
-        roomstore.resetVotes();
+        roomStore.resetVotes();
     }
 
     function revealVotes() {
-        disable_buttons = true;
-        roomstore.revealVotes();
+        roomStore.revealVotes();
     }
 </script>
 
-{#if $roomstore.votes_revealed}
-    <Button on:click={resetVotes} bind:disabled={disable_buttons} value="Reset Votes" />
+{#if $roomStore.votes_revealed}
+    <Button on:click={resetVotes} bind:disabled={disableButtons} value="Reset Votes" />
 {:else}
-    <Button on:click={revealVotes} bind:disabled={disable_buttons} value="Reveal Votes" />
+    <Button on:click={revealVotes} bind:disabled={disableButtons} value="Reveal Votes" />
 {/if}

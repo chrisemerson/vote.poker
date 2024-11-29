@@ -1,8 +1,9 @@
 <script>
     export let value = '';
+    export let disabled = false;
 </script>
 
-<button on:click>{value}</button>
+<button on:click disabled={disabled}>{value}</button>
 
 <style>
     button {
