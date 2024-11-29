@@ -8,7 +8,7 @@
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
 
-        if ((message.action === 'roomsettingschanged' && message.data.votes_revealed === true) || message.action === 'votesreset') {
+        if ((message.action === 'roomupdate' && message.data.votes_revealed === true) || message.action === 'votesreset') {
             disable_buttons = false;
         }
     });

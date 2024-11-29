@@ -3,6 +3,9 @@
     import Loading from './Loading.svelte';
     import Button from "./Button.svelte";
 
+    let useTeams = false;
+    let teams = [];
+    let defaultTeams = ['Dev', 'QA'];
     let observer = false;
     let loading = false;
     let name = '';
@@ -11,7 +14,7 @@
     {
         loading = true;
 
-        roomStore.create(name, observer);
+        roomStore.create(name, teams.length === 0 ? defaultTeams : teams, observer);
     }
 
     function handleKeyUp(event)
@@ -22,6 +25,11 @@
             createRoom();
         }
     }
+
+    function teamsChanged()
+    {
+        teams = document.getElementById('teams').value().trim().split("\n");
+    }
 </script>
 
 {#if loading}
@@ -29,6 +37,21 @@
 {:else}
     <input type="text" placeholder="Enter Your Name" bind:value={name} on:keyup={handleKeyUp}><br>
 
+    <label>
+        <input type="checkbox" name="teams" value="true" bind:checked={useTeams}>
+        Use Teams
+    </label>
+    {#if useTeams}
+
+    <textarea
+            id="teams"
+            name="teams"
+            rows="3"
+            placeholder={defaultTeams.join("\n")}
+            on:change={teamsChanged}
+            on:keyup={teamsChanged}
+    ></textarea>
+    {/if}
     <label>
         <input type="checkbox" name="observer" value="true" bind:checked={observer}> Observer
     </label>

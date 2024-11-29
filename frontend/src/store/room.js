@@ -12,6 +12,7 @@ export default (function () {
     let room_id = "";
     let saved_name = "";
     let saved_observer = false;
+    let isProduction = true;
 
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
@@ -26,7 +27,7 @@ export default (function () {
                 join(message.data.room_id, saved_name, saved_observer);
                 break;
 
-            case 'roomsettingschanged':
+            case 'roomupdate':
                 room_id = message.data.room_id;
 
                 update((room) => {
