@@ -5,6 +5,8 @@ ARGS=$(cat -)
 INPUT_PATH=$(echo "$ARGS" | jq -r ".input_path")
 OUTPUT_PATH=$(echo "$ARGS" | jq -r ".output_path")
 
+mkdir -p $(dirname "$OUTPUT_PATH")
+
 rm -f "$OUTPUT_PATH"
 
 cd "$INPUT_PATH" || exit
