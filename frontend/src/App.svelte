@@ -1,81 +1,47 @@
-<script>
-    import roomStore from "./store/room";
-    import socket from "./socket";
-
-    import Room from "./Room.svelte";
-    import CreateRoom from "./CreateRoom.svelte";
-    import JoinRoom from "./JoinRoom.svelte";
-    import Loading from "./Loading.svelte";
-    import RoomDoesntExist from "./RoomDoesntExist.svelte";
-
-    $: in_room = !!($roomStore.id && $roomStore.id !== "");
-
-    let connected = false;
-    let joiningroom = false;
-    let joiningroom_id = "";
-    let room_doesnt_exist_message = false;
-
-    if (window.location.search !== "") {
-        joiningroom_id = window.location.search.substring(1);
-
-        if (joiningroom_id === "roomdoesntexist") {
-            room_doesnt_exist_message = true;
-        } else {
-            joiningroom = true;
-        }
-    }
-
-    socket.addEventListener('open', () => connected = true);
-
-    socket.addEventListener('message', function (event) {
-        const message = JSON.parse(event.data);
-
-        if (message.action === "roomdoesntexist") {
-            window.location.href = '/?roomdoesntexist';
-        }
-    });
+<script lang="ts">
+  import svelteLogo from './assets/svelte.svg'
+  import viteLogo from '/vite.svg'
+  import Counter from './lib/Counter.svelte'
 </script>
 
 <main>
-    <h1>VOTE.POKER</h1>
-{#if !connected}
-    <Loading/>
-{:else if in_room }
-    <Room/>
-{:else if joiningroom}
-    <JoinRoom room_id={joiningroom_id}/>
-{:else}
-    {#if room_doesnt_exist_message}
-        <RoomDoesntExist/>
-    {/if}
-    <CreateRoom/>
-{/if}
+  <div>
+    <a href="https://vite.dev" target="_blank" rel="noreferrer">
+      <img src={viteLogo} class="logo" alt="Vite Logo" />
+    </a>
+    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
+      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
+    </a>
+  </div>
+  <h1>Vite + Svelte</h1>
+
+  <div class="card">
+    <Counter />
+  </div>
+
+  <p>
+    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
+  </p>
+
+  <p class="read-the-docs">
+    Click on the Vite and Svelte logos to learn more
+  </p>
 </main>
 
 <style>
-    main {
-        text-align: center;
-        padding: 1em;
-        max-width: 240px;
-        margin: 0 auto;
-    }
-
-    h1 {
-        color: #3366ff;
-        text-transform: uppercase;
-        font-size: 4em;
-        font-weight: 100;
-    }
-
-     @media (prefers-color-scheme: dark) {
-         h1 {
-             color: #99ccff;
-         }
-     }
-
-    @media (min-width: 640px) {
-        main {
-            max-width: none;
-        }
-    }
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  .logo.svelte:hover {
+    filter: drop-shadow(0 0 2em #ff3e00aa);
+  }
+  .read-the-docs {
+    color: #888;
+  }
 </style>
