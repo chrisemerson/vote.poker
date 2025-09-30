@@ -11,7 +11,7 @@ export default (function () {
     socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data);
 
-        if (!isProduction) {
+        if (!_IS_PRODUCTION_) {
             console.log("Message received from server: " + message.action);
             console.log(message.data);
         }
@@ -46,7 +46,7 @@ export default (function () {
     });
 
     const sendMessageToServer = function (action, messageData) {
-        if (!isProduction) {
+        if (!_IS_PRODUCTION_) {
             console.log("Sending message to server: " + action);
             console.log(messageData)
         }
